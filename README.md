@@ -13,6 +13,11 @@ through a JSON file compiled by the user himself.
 
 Example of a JSON file at this [link](https://flutter.dev/developing-packages/).
 
+| Key           |       Value |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
 app_name: the name of the app
 new_app_version: the new app version
 new_app_code: the new app code
