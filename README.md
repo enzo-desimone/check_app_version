@@ -35,8 +35,9 @@ Add the following import to your Dart code:
 import 'package:check_app_version/show_dialog.dart';
 ```
 
-We now have the option to use the method **ShowDialog(jsonUrl: 'my url').checkVersion();** to check the version and show a message dialog,
-remember to replace **'my link'** with the link that refers to our previously created and customized JSON file
+We now have the option to use the method **ShowDialog(jsonUrl: 'my url').checkVersion();** 
+to check the version and show a message dialog, remember to replace **'my link'** with the link that 
+refers to our previously created and customized JSON file
 
 ```dart
     ShowDialog(
