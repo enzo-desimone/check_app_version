@@ -1,8 +1,8 @@
-# check_app_version
+# Check App Version (Flutter)
 
-Check app version and upgrade
+A plugin that allows you to check the version of the app installed with a hypothetical version of the app published on the PlayStore / AppStore.
 
-## Getting Started
+## About
 
 This project is a starting point for a Dart
 [package](https://flutter.dev/developing-packages/),
