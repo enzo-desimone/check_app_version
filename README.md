@@ -11,7 +11,7 @@ The plugin compares two version codes:
 In fact the package acquires the necessary information for the comparison between the two versions, 
 through a JSON file compiled by the user himself.
 
-Example of a JSON file at this **[link]**(https://flutter.dev/developing-packages/).
+Example of a JSON file at this [link](https://flutter.dev/developing-packages/).
 
 | Key           |       Value |
 | ------------- | ------------- |
