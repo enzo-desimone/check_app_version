@@ -15,15 +15,13 @@ Example of a JSON file at this [link](https://flutter.dev/developing-packages/).
 
 | Key           |       Value |
 | ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| app_name  | the name of the app  |
+| new_app_version  | the new app version  |
+| new_app_code  | the new app code  |
+| play_store_url  | the play store app link  |
+| app_store_url  | the app store app link  |
+| app_package  | app package name  |
 
-app_name: the name of the app
-new_app_version: the new app version
-new_app_code: the new app code
-play_store_url: the play store app link
-app_store_url: the app store app link
-app_package: app package name
 
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.dev/docs), which offers tutorials, 
