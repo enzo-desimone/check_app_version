@@ -5,13 +5,13 @@ A plugin that allows you to check the version of the app installed with a hypoth
 ## About
 
 The plugin compares two version codes:
-- The code for the app installed on the device.
-- Code for a new version of the app compiled using JSON.
+- The code for the app *installed* on the device.
+- Code for a new version of the app compiled using *JSON*.
 
 In fact the package acquires the necessary information for the comparison between the two versions, 
 through a JSON file compiled by the user himself.
 
-Example of a JSON file at this [link](https://flutter.dev/developing-packages/).
+Example of a *JSON* file at this [link](https://flutter.dev/developing-packages/).
 
 | Key           |       Value |
 | ------------- | ------------- |
