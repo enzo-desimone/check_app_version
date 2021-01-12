@@ -1,8 +1,8 @@
 name: check_app_version
 description: Check app version and upgrade
-version: 0.0.4
+version: 0.0.6
 author: Enzo De Simone <enzodesimone@besimsoft.com>
-homepage: https://pub.dev/packages/check_app_version
+homepage: https://github.com/enzo-desimone/check_app_version
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

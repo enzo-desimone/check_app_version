@@ -1,4 +1,4 @@
-# Check App Version (Flutter)
+# Check App Version
 
 A plugin that allows you to check the **version** of the app installed with a hypothetical version of the app published on the PlayStore / AppStore.
 
