@@ -4,49 +4,95 @@ import 'package:check_app_version/check_app_version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_version/get_version.dart';
+import 'package:open_appstore/open_appstore.dart';
 
 class ShowDialog {
+  /// OS Version
   String _platformVersion;
+
+  /// App code id
   String _appCode;
+
+  /// App version id
   String _appVersion;
+
+  /// App package name android
   String _appPackageName;
 
+  /// App package name android
+  String _iosAppId;
+
+  /// JSON http link
   String _jsonUrl;
-  String _title;
-  String _body;
-  bool _barrierDismissible;
-  bool _onWillPop;
-  String _updateButtonText;
-  String _laterButtonText;
-  bool _laterButtonEnable;
-  double _updateButtonRadius;
-  Color _updateButtonTextColor;
-  Color _updateButtonColor;
-  Color _laterButtonColor;
+
+  /// the message dialog border radius value
   double _dialogRadius;
-  Color _titleColor;
-  Color _bodyColor;
+
+  /// the message dialog background color
   Color _backgroundColor;
+
+  /// the dialog message title
+  String _title;
+
+  /// the dialog message title color
+  Color _titleColor;
+
+  /// the dialog message body
+  String _body;
+
+  /// the dialog message body color
+  Color _bodyColor;
+
+  /// if is TRUE you can dismiss the message
+  /// dialog by tapping the modal barrier
+  bool _barrierDismissible;
+
+  /// if is TRUE the message dialog it
+  /// will disappear using only the action keys (default: TRUE)
+  bool _onWillPop;
+
+  /// the update button text
+  String _updateButtonText;
+
+  /// the update button text color
+  Color _updateButtonTextColor;
+
+  /// the update button color
+  Color _updateButtonColor;
+
+  /// the update button text border radius value
+  double _updateButtonRadius;
+
+  /// the later button text
+  String _laterButtonText;
+
+  /// the later button color
+  Color _laterButtonColor;
+
+  /// if is FALSE the later button is not visible (default: FALSE)
+  bool _laterButtonEnable;
+
+  /// Context
   BuildContext _context;
 
   ShowDialog(
       {jsonUrl,
-        title,
-        body,
-        barrierDismissible,
-        onWillPop,
-        updateButtonText,
-        laterButtonText,
-        laterButtonEnable,
-        updateButtonRadius,
-        updateButtonTextColor,
-        updateButtonColor,
-        laterButtonColor,
-        dialogRadius,
-        titleColor,
-        bodyColor,
-        backgroundColor,
-        context}) {
+      title,
+      body,
+      barrierDismissible,
+      onWillPop,
+      updateButtonText,
+      laterButtonText,
+      laterButtonEnable,
+      updateButtonRadius,
+      updateButtonTextColor,
+      updateButtonColor,
+      laterButtonColor,
+      dialogRadius,
+      titleColor,
+      bodyColor,
+      backgroundColor,
+      context}) {
     _jsonUrl = jsonUrl;
     _title = title;
     _body = body;
@@ -103,17 +149,17 @@ class ShowDialog {
 
         for (int i = 0; i < 4; i++) {
           String oldNumber =
-          regEx.allMatches(tempOldCode).map((m) => m[0]).toString();
+              regEx.allMatches(tempOldCode).map((m) => m[0]).toString();
 
           final startIndex = oldNumber.indexOf('(');
           final endIndex = oldNumber.indexOf(')', startIndex + '('.length);
 
           String newNumber =
-          regEx.allMatches(tempNewCode).map((m) => m[0]).toString();
+              regEx.allMatches(tempNewCode).map((m) => m[0]).toString();
 
           final startNewIndex = newNumber.indexOf('(');
           final endNewIndex =
-          newNumber.indexOf(')', startNewIndex + '('.length);
+              newNumber.indexOf(')', startNewIndex + '('.length);
 
           tempOldCode = tempOldCode.replaceFirst(
               oldNumber.substring(startIndex + '('.length, endIndex), '');
@@ -123,7 +169,7 @@ class ShowDialog {
           tempNewCode = tempNewCode.replaceFirst('.', '');
 
           if (int.parse(
-              oldNumber.substring(startIndex + '('.length, endIndex)) <
+                  oldNumber.substring(startIndex + '('.length, endIndex)) <
               int.parse(newNumber.substring(
                   startNewIndex + '('.length, endNewIndex))) {
             flag = true;
@@ -160,18 +206,21 @@ class ShowDialog {
                 Visibility(
                   visible: _laterButtonEnable ?? true,
                   child: FlatButton(
-                    onPressed: () => SystemChannels.platform
-                        .invokeMethod<void>('SystemNavigator.pop'),
+                    onPressed: () => Navigator.pop(context),
                     child: new Text(_laterButtonText ?? 'Later',
                         style: TextStyle(
                             color: _laterButtonColor ?? Colors.black)),
                   ),
                 ),
                 RaisedButton(
-                  onPressed: () async => Navigator.pop(context),
+                  onPressed: () {
+                    OpenAppstore.launch(
+                        androidAppId: CheckAppVersion().appFile.appPackage,
+                        iOSAppId: CheckAppVersion().appFile.iosAppId);
+                  },
                   shape: RoundedRectangleBorder(
                     borderRadius:
-                    BorderRadius.circular(_updateButtonRadius ?? 10),
+                        BorderRadius.circular(_updateButtonRadius ?? 10),
                   ),
                   color: _updateButtonColor ?? Colors.blue,
                   child: new Text(
@@ -191,12 +240,4 @@ class ShowDialog {
     if (_onWillPop != null && !_onWillPop) Navigator.pop(context);
     return false;
   }
-
-  String get appPackageName => _appPackageName;
-
-  String get appVersion => _appVersion;
-
-  String get appCode => _appCode;
-
-  String get platformVersion => _platformVersion;
 }

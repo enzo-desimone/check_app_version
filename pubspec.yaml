@@ -1,8 +1,8 @@
 name: check_app_version
 description: Check app version and upgrade
-version: 0.0.1
-
-homepage: https://pub.dev/packages/
+version: 0.0.4
+author: Enzo De Simone <enzodesimone@besimsoft.com>
+homepage: https://pub.dev/packages/check_app_version
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -14,6 +14,7 @@ dependencies:
 
   http: ^0.12.2
   get_version: ^0.2.2
+  open_appstore: ^1.0.2
 
 dev_dependencies:
   flutter_test:

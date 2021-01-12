@@ -2,7 +2,6 @@
   "app_name": "Check App Version",
   "new_app_version": "1.0.2",
   "new_app_code": "0",
-  "play_store_url": "https://",
-  "app_store_url": "https://",
-  "app_package": "com.besimsoft.example"
+  "app_package": "com.besimsoft.example",
+  "ios_app_id": "324324"
 }

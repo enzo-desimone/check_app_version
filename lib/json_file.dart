@@ -2,23 +2,16 @@ class JsonFile {
   String _appName;
   String _newAppVersion;
   String _newAppCode;
-  String _playStoreUrl;
-  String _appStoreUrl;
   String _appPackage;
+  String _iosAppId;
 
-  JsonFile(
-      {appName,
-        newAppVersion,
-        newAppCode,
-        playStoreUrl,
-        appStoreUrl,
-        appPackage}) {
+  JsonFile({appName, newAppVersion, newAppCode, appPackage, iosAppId}) {
     _appName = appName;
     _newAppVersion = newAppVersion;
     _newAppCode = newAppCode;
-    _playStoreUrl = playStoreUrl;
-    _appStoreUrl = appStoreUrl;
+
     _appPackage = appPackage;
+    _iosAppId = iosAppId;
   }
 
   factory JsonFile.fromJson(dynamic json) {
@@ -26,25 +19,22 @@ class JsonFile {
         appName: json['app_name'] as String,
         newAppVersion: json['new_app_version'] as String,
         newAppCode: json['new_app_code'] as String,
-        playStoreUrl: json['play_store_url'] as String,
-        appStoreUrl: json['app_store_url'] as String,
-        appPackage: json['app_package'] as String);
+        appPackage: json['app_package'] as String,
+        iosAppId: json['ios_app_id'] as String);
   }
 
   @override
   String toString() {
-    return '{${this._appName}, ${this._newAppVersion}, ${this._newAppCode}, ${this._playStoreUrl}, ${this._appStoreUrl}, ${this._appPackage}}';
+    return '{${this._appName}, ${this._newAppVersion}, ${this._newAppCode},  ${this._appPackage}, , ${this._iosAppId}}';
   }
 
   String get appName => _appName;
-
-  String get appStoreUrl => _appStoreUrl;
-
-  String get playStoreUrl => _playStoreUrl;
 
   String get appPackage => _appPackage;
 
   String get newAppCode => _newAppCode;
 
   String get newAppVersion => _newAppVersion;
+
+  String get iosAppId => _iosAppId;
 }

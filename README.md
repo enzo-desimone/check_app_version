@@ -18,9 +18,8 @@ Example of a JSON file at this [link](https://github.com/enzo-desimone/check_app
 | app_name  | the name of the app  |
 | new_app_version  | the new app version  |
 | new_app_code  | the new app code  |
-| play_store_url  | the play store app link  |
-| app_store_url  | the app store app link  |
-| app_package  | app package name  |
+| app_package  | android app package name  |
+| ios_app_id  | iOS app id number  |
 
 ## Install
 
@@ -69,12 +68,4 @@ In the **ShowDialog()** method we have many properties to be able to **customize
 | laterButtonText  | the later button text  |
 | laterButtonColor  | the later button color  |
 | laterButtonEnable  | if is FALSE the later button is not visible (default: FALSE)  |
-
-
-
-
-
-
-
-
 

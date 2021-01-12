@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     ShowDialog(
         context: context,
-        jsonUrl: 'https://spaziosalo.besimsoft.com/example.json',
+        jsonUrl: 'https://besimsoft.com/example.json',
         updateButtonColor: Colors.blue,
         laterButtonEnable: true)
         .checkVersion();
