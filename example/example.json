@@ -3,5 +3,6 @@
   "new_app_version": "1.0.2",
   "new_app_code": "0",
   "app_package": "com.besimsoft.example",
+  "bundle_id_ios": "com.besimsoft.example",
   "ios_app_id": "324324"
 }
