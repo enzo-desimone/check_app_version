@@ -7,9 +7,6 @@ import 'package:get_version/get_version.dart';
 import 'package:open_appstore/open_appstore.dart';
 
 class ShowDialog {
-  /// OS Version
-  String _platformVersion;
-
   /// App code id
   String _appCode;
 
@@ -112,12 +109,6 @@ class ShowDialog {
 
   Future<void> checkVersion() async {
     try {
-      _platformVersion = await GetVersion.platformVersion;
-    } on PlatformException {
-      _platformVersion = 'Failed to get platform version.';
-    }
-
-    try {
       _appCode = await GetVersion.projectVersion;
     } on PlatformException {
       _appCode = 'Failed to get project version.';
@@ -135,8 +126,14 @@ class ShowDialog {
       _appPackageName = 'Failed to get app ID.';
     }
 
+    try {
+      _iosAppId = await GetVersion.appID;
+    } on PlatformException {
+      _iosAppId = 'Failed to get app ID.';
+    }
+
     if (await CheckAppVersion().getJsonFile(_jsonUrl)) {
-      if (CheckAppVersion().appFile.appPackage == _appPackageName) {
+      if (CheckAppVersion().appFile.appPackage == _appPackageName || CheckAppVersion().appFile.bundleId == _iosAppId) {
         bool flag = false;
         if (_appVersion.length == 0) _appVersion = '0';
         String tempOldCode = _appCode + '.' + _appVersion;
@@ -176,7 +173,6 @@ class ShowDialog {
             break;
           }
         }
-
         if (flag) updateDialog(_context);
       }
     }
@@ -189,15 +185,15 @@ class ShowDialog {
         builder: (BuildContext context) {
           return WillPopScope(
             onWillPop: () => _onWillPopState(context),
-            child: new AlertDialog(
+            child: AlertDialog(
               backgroundColor: _backgroundColor ?? Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(_dialogRadius ?? 12.0)),
-              title: new Text(
+              title: Text(
                 _title ?? 'Update App',
                 style: TextStyle(color: _titleColor ?? Colors.black),
               ),
-              content: new Text(
+              content: Text(
                   _body ??
                       'A new version of the app is available ' +
                           CheckAppVersion().appFile.newAppVersion,
@@ -205,25 +201,33 @@ class ShowDialog {
               actions: <Widget>[
                 Visibility(
                   visible: _laterButtonEnable ?? true,
-                  child: FlatButton(
+                  child: TextButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(_updateButtonRadius ?? 10),
+                        ),
+                        onPrimary: _updateButtonColor ?? Colors.blue),
                     onPressed: () => Navigator.pop(context),
                     child: new Text(_laterButtonText ?? 'Later',
                         style: TextStyle(
                             color: _laterButtonColor ?? Colors.black)),
                   ),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     OpenAppstore.launch(
                         androidAppId: CheckAppVersion().appFile.appPackage,
-                        iOSAppId: CheckAppVersion().appFile.iosAppId);
+                        iOSAppId: CheckAppVersion().appFile.iOSAppId);
                   },
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(_updateButtonRadius ?? 10),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(_updateButtonRadius ?? 10),
+                    ),
+                    primary: _updateButtonColor ?? Colors.blue,
                   ),
-                  color: _updateButtonColor ?? Colors.blue,
-                  child: new Text(
+                  child: Text(
                     _updateButtonText ?? "Update",
                     style: TextStyle(
                         color: _updateButtonTextColor,

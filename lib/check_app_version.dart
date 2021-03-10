@@ -16,9 +16,10 @@ class CheckAppVersion {
   CheckAppVersion._internal();
 
   Future<bool> getJsonFile(String url) async {
+
     try {
       final response = await http.get(
-        url,
+          Uri.parse(url)
       );
       if (response.statusCode == 200) {
         appFile = JsonFile.fromJson(json.decode(response.body));

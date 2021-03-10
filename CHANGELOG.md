@@ -1,4 +1,22 @@
-## [0.0.5] - 13/01/2021
+## [0.2.1] - 10/03/2021
+
+* General bug fixed
+* Fix iOS bug
+* New doc
+
+## [0.1.0] - 08/03/2021
+
+* Update http package
+
+## [0.0.8] - 16/02/2021
+
+* Fix iOS bug
+
+## [0.0.8] - 16/02/2021
+
+* Fix iOS bug
+
+## [0.0.6] - 13/01/2021
 
 * Fix GUI bug
 
