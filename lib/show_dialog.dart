@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:app_installer/app_installer.dart';
 import 'package:check_app_version/check_app_version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_version/get_version.dart';
-import 'package:open_appstore/open_appstore.dart';
+import 'package:package_info/package_info.dart';
 
 class ShowDialog {
   /// App code id
@@ -15,9 +15,6 @@ class ShowDialog {
 
   /// App package name android
   String _appPackageName;
-
-  /// App package name android
-  String _iosAppId;
 
   /// JSON http link
   String _jsonUrl;
@@ -108,32 +105,30 @@ class ShowDialog {
   }
 
   Future<void> checkVersion() async {
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     try {
-      _appCode = await GetVersion.projectVersion;
+      _appCode = packageInfo.version;
     } on PlatformException {
       _appCode = 'Failed to get project version.';
     }
 
     try {
-      _appVersion = await GetVersion.projectCode;
+      _appVersion = packageInfo.buildNumber;
     } on PlatformException {
       _appVersion = 'Failed to get build number.';
     }
 
     try {
-      _appPackageName = await GetVersion.appID;
+      _appPackageName = packageInfo.packageName;
     } on PlatformException {
       _appPackageName = 'Failed to get app ID.';
     }
 
-    try {
-      _iosAppId = await GetVersion.appID;
-    } on PlatformException {
-      _iosAppId = 'Failed to get app ID.';
-    }
-
     if (await CheckAppVersion().getJsonFile(_jsonUrl)) {
-      if (CheckAppVersion().appFile.appPackage == _appPackageName || CheckAppVersion().appFile.bundleId == _iosAppId) {
+      if (CheckAppVersion().appFile.appPackage == _appPackageName ||
+          CheckAppVersion().appFile.bundleId == _appPackageName) {
         bool flag = false;
         if (_appVersion.length == 0) _appVersion = '0';
         String tempOldCode = _appCode + '.' + _appVersion;
@@ -216,9 +211,8 @@ class ShowDialog {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    OpenAppstore.launch(
-                        androidAppId: CheckAppVersion().appFile.appPackage,
-                        iOSAppId: CheckAppVersion().appFile.iOSAppId);
+                    AppInstaller.goStore(CheckAppVersion().appFile.appPackage,
+                        CheckAppVersion().appFile.iOSAppId);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
