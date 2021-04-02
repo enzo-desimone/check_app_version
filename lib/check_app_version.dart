@@ -5,7 +5,7 @@ import 'package:check_app_version/json_file.dart';
 import 'package:http/http.dart' as http;
 
 class CheckAppVersion {
-  JsonFile appFile;
+  late JsonFile appFile;
 
   static final CheckAppVersion _singleton = CheckAppVersion._internal();
 
@@ -16,11 +16,8 @@ class CheckAppVersion {
   CheckAppVersion._internal();
 
   Future<bool> getJsonFile(String url) async {
-
     try {
-      final response = await http.get(
-          Uri.parse(url)
-      );
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         appFile = JsonFile.fromJson(json.decode(response.body));
         return true;

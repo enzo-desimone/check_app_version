@@ -1,3 +1,7 @@
+## [0.3.0] - 10/03/2021
+* Migrate NULL SAFETY
+* Bugs fixed
+
 ## [0.2.1] - 10/03/2021
 
 * General bug fixed

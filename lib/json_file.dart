@@ -1,10 +1,10 @@
 class JsonFile {
-  String _appName;
-  String _newAppVersion;
-  String _newAppCode;
-  String _bundleId;
-  String _appPackage;
-  String _iOSAppId;
+  String? _appName;
+  String? _newAppVersion;
+  String? _newAppCode;
+  String? _bundleId;
+  String? _appPackage;
+  String? _iOSAppId;
 
   JsonFile(
       {appName, newAppVersion, newAppCode, bundleId, appPackage, iOSAppId}) {
@@ -18,12 +18,12 @@ class JsonFile {
 
   factory JsonFile.fromJson(dynamic json) {
     return JsonFile(
-        appName: json['app_name'] as String,
-        newAppVersion: json['new_app_version'] as String,
-        newAppCode: json['new_app_code'] as String,
-        bundleId: json['bundle_id_ios'] as String,
-        appPackage: json['app_package'] as String,
-        iOSAppId: json['ios_app_id'] as String);
+        appName: json['app_name'] as String?,
+        newAppVersion: json['new_app_version'] as String?,
+        newAppCode: json['new_app_code'] as String?,
+        bundleId: json['bundle_id_ios'] as String?,
+        appPackage: json['app_package'] as String?,
+        iOSAppId: json['ios_app_id'] as String?);
   }
 
   @override
@@ -31,15 +31,15 @@ class JsonFile {
     return '{${this._appName}, ${this._newAppVersion}, ${this._newAppCode}, ${this._bundleId}, ${this._appPackage}, ${this._iOSAppId}}';
   }
 
-  String get appName => _appName;
+  String? get appName => _appName;
 
-  String get bundleId => _bundleId;
+  String? get bundleId => _bundleId;
 
-  String get newAppCode => _newAppCode;
+  String? get newAppCode => _newAppCode;
 
-  String get newAppVersion => _newAppVersion;
+  String? get newAppVersion => _newAppVersion;
 
-  String get appPackage => _appPackage;
+  String? get appPackage => _appPackage;
 
-  String get iOSAppId => _iOSAppId;
+  String? get iOSAppId => _iOSAppId;
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:core';
 
 import 'package:app_installer/app_installer.dart';
 import 'package:check_app_version/check_app_version.dart';
@@ -8,66 +9,66 @@ import 'package:package_info/package_info.dart';
 
 class ShowDialog {
   /// App code id
-  String _appCode;
+  late String _appCode;
 
   /// App version id
-  String _appVersion;
+  late String _appVersion;
 
   /// App package name android
-  String _appPackageName;
+  String? _appPackageName;
 
   /// JSON http link
-  String _jsonUrl;
+  String? _jsonUrl;
 
   /// the message dialog border radius value
-  double _dialogRadius;
+  double? _dialogRadius;
 
   /// the message dialog background color
-  Color _backgroundColor;
+  Color? _backgroundColor;
 
   /// the dialog message title
-  String _title;
+  String? _title;
 
   /// the dialog message title color
-  Color _titleColor;
+  Color? _titleColor;
 
   /// the dialog message body
-  String _body;
+  String? _body;
 
   /// the dialog message body color
-  Color _bodyColor;
+  Color? _bodyColor;
 
   /// if is TRUE you can dismiss the message
   /// dialog by tapping the modal barrier
-  bool _barrierDismissible;
+  bool? _barrierDismissible;
 
   /// if is TRUE the message dialog it
   /// will disappear using only the action keys (default: TRUE)
-  bool _onWillPop;
+  bool? _onWillPop;
 
   /// the update button text
-  String _updateButtonText;
+  String? _updateButtonText;
 
   /// the update button text color
-  Color _updateButtonTextColor;
+  Color? _updateButtonTextColor;
 
   /// the update button color
-  Color _updateButtonColor;
+  Color? _updateButtonColor;
 
   /// the update button text border radius value
-  double _updateButtonRadius;
+  double? _updateButtonRadius;
 
   /// the later button text
-  String _laterButtonText;
+  String? _laterButtonText;
 
   /// the later button color
-  Color _laterButtonColor;
+  Color? _laterButtonColor;
 
   /// if is FALSE the later button is not visible (default: FALSE)
-  bool _laterButtonEnable;
+  bool? _laterButtonEnable;
 
   /// Context
-  BuildContext _context;
+  BuildContext? _context;
 
   ShowDialog(
       {jsonUrl,
@@ -105,7 +106,6 @@ class ShowDialog {
   }
 
   Future<void> checkVersion() async {
-
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     try {
@@ -126,16 +126,16 @@ class ShowDialog {
       _appPackageName = 'Failed to get app ID.';
     }
 
-    if (await CheckAppVersion().getJsonFile(_jsonUrl)) {
+    if (await CheckAppVersion().getJsonFile(_jsonUrl!)) {
       if (CheckAppVersion().appFile.appPackage == _appPackageName ||
           CheckAppVersion().appFile.bundleId == _appPackageName) {
         bool flag = false;
         if (_appVersion.length == 0) _appVersion = '0';
         String tempOldCode = _appCode + '.' + _appVersion;
 
-        String tempNewCode = CheckAppVersion().appFile.newAppVersion +
+        String tempNewCode = CheckAppVersion().appFile.newAppVersion! +
             '.' +
-            CheckAppVersion().appFile.newAppCode;
+            CheckAppVersion().appFile.newAppCode!;
 
         var regEx = RegExp(r'^\d{1,2}', multiLine: true);
 
@@ -173,7 +173,7 @@ class ShowDialog {
     }
   }
 
-  Future<Widget> updateDialog(context) {
+  Future<Widget?> updateDialog(context) {
     return showDialog(
         context: context,
         barrierDismissible: _barrierDismissible ?? true,
@@ -191,7 +191,7 @@ class ShowDialog {
               content: Text(
                   _body ??
                       'A new version of the app is available ' +
-                          CheckAppVersion().appFile.newAppVersion,
+                          CheckAppVersion().appFile.newAppVersion!,
                   style: TextStyle(color: _bodyColor ?? Colors.black54)),
               actions: <Widget>[
                 Visibility(
@@ -211,8 +211,8 @@ class ShowDialog {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    AppInstaller.goStore(CheckAppVersion().appFile.appPackage,
-                        CheckAppVersion().appFile.iOSAppId);
+                    AppInstaller.goStore(CheckAppVersion().appFile.appPackage!,
+                        CheckAppVersion().appFile.appPackage!);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -235,7 +235,7 @@ class ShowDialog {
   }
 
   Future<bool> _onWillPopState(context) async {
-    if (_onWillPop != null && !_onWillPop) Navigator.pop(context);
+    if (_onWillPop != null && !_onWillPop!) Navigator.pop(context);
     return false;
   }
 }

@@ -33,10 +33,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     ShowDialog(
-        context: context,
-        jsonUrl: 'https://besimsoft.com/example.json',
-        updateButtonColor: Colors.blue,
-        laterButtonEnable: true)
+            context: context,
+            jsonUrl: 'https://besimsoft.com/example.json',
+            updateButtonColor: Colors.blue,
+            laterButtonEnable: true)
         .checkVersion();
     return Scaffold(
       appBar: AppBar(
@@ -44,6 +44,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(),
     );
-
   }
 }
