@@ -19,6 +19,7 @@ Example of a JSON file at this [link](https://github.com/enzo-desimone/check_app
 | new_app_version  | the new app version  |
 | new_app_code  | the new app code  |
 | app_package  | android app package name  |
+| bundle_id_ios  | ios bundle identify  |
 | ios_app_id  | iOS app id number  |
 
 ## Install
