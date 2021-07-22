@@ -69,4 +69,5 @@ In the **ShowDialog()** method we have many properties to be able to **customize
 | laterButtonText  | the later button text  |
 | laterButtonColor  | the later button color  |
 | laterButtonEnable  | if is FALSE the later button is not visible (default: FALSE)  |
+| cupertinoDialog  | if is TRUE you can use Cupertino Style for iOS and Material Style for Android (default: TRUE)  |
 

@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:core';
-
+import 'dart:io' show Platform;
 import 'package:app_installer/app_installer.dart';
 import 'package:check_app_version/check_app_version.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
@@ -41,6 +42,10 @@ class ShowDialog {
   /// if is TRUE you can dismiss the message
   /// dialog by tapping the modal barrier
   bool? _barrierDismissible;
+
+  /// if is TRUE you can use Android Style for Android
+  /// Cupertino IOS style for iOS
+  bool? _cupertinoDialog;
 
   /// if is TRUE the message dialog it
   /// will disappear using only the action keys (default: TRUE)
@@ -87,9 +92,11 @@ class ShowDialog {
       titleColor,
       bodyColor,
       backgroundColor,
+      cupertinoDialog,
       context}) {
     _jsonUrl = jsonUrl;
     _title = title;
+    _cupertinoDialog = cupertinoDialog;
     _body = body;
     _updateButtonText = updateButtonText;
     _laterButtonText = laterButtonText;
@@ -168,12 +175,63 @@ class ShowDialog {
             break;
           }
         }
-        if (flag) updateDialog(_context);
+        if (flag) {
+          if (_cupertinoDialog != null && !_cupertinoDialog!)
+            updateDialogAndroid(_context);
+          else if (Platform.isAndroid)
+            updateDialogAndroid(_context);
+          else if (Platform.isIOS) updateDialogIos(_context);
+        }
       }
     }
   }
 
-  Future<Widget?> updateDialog(context) {
+  Future<Widget?> updateDialogIos(context) {
+    return showCupertinoDialog(
+        context: context,
+        barrierDismissible: _barrierDismissible ?? true,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () => _onWillPopState(context),
+            child: CupertinoAlertDialog(
+              title: Text(
+                _title ?? 'Update App',
+                style: TextStyle(color: _titleColor ?? Colors.black),
+              ),
+              content: Text(
+                  _body ??
+                      'A new version of the app is available ' +
+                          CheckAppVersion().appFile.newAppVersion!,
+                  style: TextStyle(color: _bodyColor ?? Colors.black54)),
+              actions: <Widget>[
+                Visibility(
+                  visible: _laterButtonEnable ?? true,
+                  child: CupertinoDialogAction(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(_laterButtonText ?? 'Later',
+                        style: TextStyle(
+                            color: _laterButtonColor ?? Colors.black)),
+                  ),
+                ),
+                CupertinoDialogAction(
+                  onPressed: () {
+                    AppInstaller.goStore(CheckAppVersion().appFile.appPackage!,
+                        CheckAppVersion().appFile.appPackage!);
+                  },
+                  child: Text(
+                    _updateButtonText ?? "Update",
+                    style: TextStyle(
+                        color: _updateButtonTextColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  Future<Widget?> updateDialogAndroid(context) {
     return showDialog(
         context: context,
         barrierDismissible: _barrierDismissible ?? true,

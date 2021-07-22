@@ -36,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
             context: context,
             jsonUrl: 'https://besimsoft.com/example.json',
             updateButtonColor: Colors.blue,
+            cupertinoDialog: true,
             laterButtonEnable: true)
         .checkVersion();
     return Scaffold(

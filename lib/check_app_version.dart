@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:check_app_version/json_file.dart';
 import 'package:http/http.dart' as http;
 
+import 'json_file.dart';
+
 class CheckAppVersion {
   late JsonFile appFile;
 
