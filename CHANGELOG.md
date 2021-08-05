@@ -1,3 +1,6 @@
+## [0.4.0+1]
+- Migrated from the deprecated package_info plugin to package_info_plus.
+
 ## [0.4.0] - 10/03/2021
 * Add Auto Cupertino Style
 * Bugs fixed
