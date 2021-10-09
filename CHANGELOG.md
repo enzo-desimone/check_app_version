@@ -1,4 +1,11 @@
-## [0.4.0] - 10/03/2021
+## [0.6.0] - 27/08/2021
+* Update project plugins
+
+## [0.5.0] - 01/08/2021
+* Fix cupertino Style
+* Update example
+
+## [0.4.0] - 23/07/2021
 * Add Auto Cupertino Style
 * Bugs fixed
 
@@ -6,8 +13,7 @@
 * Migrate NULL SAFETY
 * Bugs fixed
 
-## [0.2.1] - 10/03/2021
-
+## [0.2.1] - 01/03/2021
 * General bug fixed
 * Fix iOS bug
 * New doc

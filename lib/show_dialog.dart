@@ -6,7 +6,7 @@ import 'package:check_app_version/check_app_version.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class ShowDialog {
   /// App code id
@@ -203,29 +203,43 @@ class ShowDialog {
                       'A new version of the app is available ' +
                           CheckAppVersion().appFile.newAppVersion!,
                   style: TextStyle(color: _bodyColor ?? Colors.black54)),
-              actions: <Widget>[
-                Visibility(
-                  visible: _laterButtonEnable ?? true,
-                  child: CupertinoDialogAction(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(_laterButtonText ?? 'Later',
-                        style: TextStyle(
-                            color: _laterButtonColor ?? Colors.black)),
-                  ),
-                ),
-                CupertinoDialogAction(
-                  onPressed: () {
-                    AppInstaller.goStore(CheckAppVersion().appFile.appPackage!,
-                        CheckAppVersion().appFile.appPackage!);
-                  },
-                  child: Text(
-                    _updateButtonText ?? "Update",
-                    style: TextStyle(
-                        color: _updateButtonTextColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
+              actions: (_laterButtonEnable ?? true)
+                  ? <Widget>[
+                      CupertinoDialogAction(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(_laterButtonText ?? 'Later',
+                            style: TextStyle(
+                                color: _laterButtonColor ?? Colors.black)),
+                      ),
+                      CupertinoDialogAction(
+                        onPressed: () {
+                          AppInstaller.goStore(
+                              CheckAppVersion().appFile.appPackage!,
+                              CheckAppVersion().appFile.appPackage!);
+                        },
+                        child: Text(
+                          _updateButtonText ?? "Update",
+                          style: TextStyle(
+                              color: _updateButtonTextColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ]
+                  : <Widget>[
+                      CupertinoDialogAction(
+                        onPressed: () {
+                          AppInstaller.goStore(
+                              CheckAppVersion().appFile.appPackage!,
+                              CheckAppVersion().appFile.appPackage!);
+                        },
+                        child: Text(
+                          _updateButtonText ?? "Update",
+                          style: TextStyle(
+                              color: _updateButtonTextColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
             ),
           );
         });

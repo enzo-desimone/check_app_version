@@ -31,7 +31,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  Widget build(BuildContext context) {
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  _init() {
     ShowDialog(
             context: context,
             jsonUrl: 'https://besimsoft.com/example.json',
@@ -39,6 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
             cupertinoDialog: true,
             laterButtonEnable: true)
         .checkVersion();
+  }
+
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
