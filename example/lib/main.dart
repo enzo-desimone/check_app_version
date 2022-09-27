@@ -1,5 +1,6 @@
 import 'package:check_app_version/show_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +39,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _init() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    print(packageInfo.packageName);
     ShowDialog(
       context: context,
       jsonUrl: 'https://besimsoft.com/example.json',

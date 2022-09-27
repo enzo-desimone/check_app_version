@@ -7,6 +7,7 @@ class JsonFile {
   String? _windowsPackage;
   String? _linuxPackage;
   String? _macOSPackage;
+  String? _webPackage;
   String? _iOSAppId;
 
   JsonFile({
@@ -18,6 +19,7 @@ class JsonFile {
     windowsPackage,
     linuxPackage,
     macOSPackage,
+    webPackage,
     iOSAppId,
   }) {
     _appName = appName;
@@ -28,6 +30,7 @@ class JsonFile {
     _windowsPackage = windowsPackage;
     _linuxPackage = linuxPackage;
     _macOSPackage = macOSPackage;
+    _webPackage = webPackage;
     _iOSAppId = iOSAppId;
   }
 
@@ -41,12 +44,13 @@ class JsonFile {
         windowsPackage: json['windows_package'] as String?,
         linuxPackage: json['linux_package'] as String?,
         macOSPackage: json['macos_package'] as String?,
+        webPackage: json['web_package'] as String?,
         iOSAppId: json['ios_app_id'] as String?);
   }
 
   @override
   String toString() {
-    return '{${this._appName}, ${this._newAppVersion}, ${this._newAppCode}, ${this._iOSAppId}, ${this._androidPackage}, ${this._iOSPackage}, ${this._windowsPackage}, ${this._linuxPackage}, ${this._macOSPackage}}';
+    return '{${this._appName}, ${this._newAppVersion}, ${this._newAppCode}, ${this._iOSAppId}, ${this._androidPackage}, ${this._iOSPackage}, ${this._windowsPackage}, ${this._linuxPackage}, ${this._macOSPackage}, ${this._webPackage}';
   }
 
   String? get appName => _appName;
@@ -64,6 +68,8 @@ class JsonFile {
   String? get linuxPackage => _linuxPackage;
 
   String? get macOSPackage => _macOSPackage;
+
+  String? get webPackage => _webPackage;
 
   String? get iOSAppId => _iOSAppId;
 }

@@ -51,6 +51,10 @@ class ShowDialog {
   /// will disappear using only the action keys (default: TRUE)
   bool? onWillPop;
 
+  /// if is TRUE the message dialog it
+  /// will disappear on flutter web app version (default: TRUE)
+  bool? showWeb;
+
   /// the update button text
   String? updateButtonText;
 
@@ -81,28 +85,28 @@ class ShowDialog {
   /// Context
   BuildContext context;
 
-  ShowDialog({
-    required this.jsonUrl,
-    required this.context,
-    required this.onPressConfirm,
-    required this.onPressDecline,
-    this.cupertinoDialog,
-    this.title,
-    this.body,
-    this.updateButtonText,
-    this.laterButtonText,
-    this.laterButtonEnable,
-    this.barrierDismissible,
-    this.onWillPop,
-    this.updateButtonRadius,
-    this.updateButtonTextColor,
-    this.updateButtonColor,
-    this.laterButtonColor,
-    this.dialogRadius,
-    this.titleColor,
-    this.bodyColor,
-    this.backgroundColor,
-  });
+  ShowDialog(
+      {required this.jsonUrl,
+      required this.context,
+      required this.onPressConfirm,
+      required this.onPressDecline,
+      this.cupertinoDialog,
+      this.title,
+      this.body,
+      this.updateButtonText,
+      this.laterButtonText,
+      this.laterButtonEnable,
+      this.barrierDismissible,
+      this.onWillPop,
+      this.updateButtonRadius,
+      this.updateButtonTextColor,
+      this.updateButtonColor,
+      this.laterButtonColor,
+      this.dialogRadius,
+      this.titleColor,
+      this.bodyColor,
+      this.backgroundColor,
+      this.showWeb});
 
   Future<void> checkVersion() async {
     await _getAppInfo();
@@ -111,8 +115,9 @@ class ShowDialog {
           Cav().appFile.iOSPackage == _appPackage ||
           Cav().appFile.windowsPackage == _appPackage ||
           Cav().appFile.linuxPackage == _appPackage ||
-          Cav().appFile.macOSPackage == _appPackage) {
-        if (await _getAppVersion()) {
+          Cav().appFile.macOSPackage == _appPackage ||
+          Cav().appFile.webPackage == _appPackage) {
+        if (showWeb ?? true && await _getAppVersion()) {
           if (!(cupertinoDialog!)) {
             updateGenericDialog(context);
           } else {
