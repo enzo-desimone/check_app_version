@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:check_app_version/show_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({required this.title});
 
   final String title;
 
@@ -37,14 +40,20 @@ class _MyHomePageState extends State<MyHomePage> {
     _init();
   }
 
-  _init() {
+  _init() async {
+    PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+    log(await _packageInfo.appName);
+    log(await _packageInfo.packageName);
+    log(await _packageInfo.version);
+    log(await _packageInfo.buildNumber);
     ShowDialog(
-            context: context,
-            jsonUrl: 'https://besimsoft.com/example.json',
-            updateButtonColor: Colors.blue,
-            cupertinoDialog: true,
-            laterButtonEnable: true)
-        .checkVersion();
+      context: context,
+      jsonUrl: 'https://besimsoft.com/example.json',
+      updateButtonColor: Colors.blue,
+      cupertinoDialog: true,
+      onPressDecline: () => Navigator.of(context).pop(),
+      onPressConfirm: () => Navigator.of(context).pop(),
+    ).checkVersion();
   }
 
   Widget build(BuildContext context) {

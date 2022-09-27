@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:check_app_version/json_file.dart';
 import 'package:http/http.dart' as http;
-
-import 'json_file.dart';
 
 class CheckAppVersion {
   late JsonFile appFile;
@@ -25,8 +24,8 @@ class CheckAppVersion {
         return true;
       } else
         return false;
-    } on Exception catch (_) {
-      print(_);
+    } on Exception catch (error) {
+      log(error.toString());
       return false;
     }
   }
