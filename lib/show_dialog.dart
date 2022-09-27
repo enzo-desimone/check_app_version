@@ -116,7 +116,7 @@ class ShowDialog {
           if (!(cupertinoDialog!)) {
             updateGenericDialog(context);
           } else {
-            if (Platform.isIOS) {
+            if (Platform.isIOS || Platform.isMacOS) {
               updateDialogIos(context);
             } else {
               updateGenericDialog(context);

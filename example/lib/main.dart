@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:check_app_version/show_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,11 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _init() async {
-    PackageInfo _packageInfo = await PackageInfo.fromPlatform();
-    log(await _packageInfo.appName);
-    log(await _packageInfo.packageName);
-    log(await _packageInfo.version);
-    log(await _packageInfo.buildNumber);
     ShowDialog(
       context: context,
       jsonUrl: 'https://besimsoft.com/example.json',

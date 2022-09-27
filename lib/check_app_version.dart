@@ -25,7 +25,7 @@ class CheckAppVersion {
       } else
         return false;
     } on Exception catch (error) {
-      log(error.toString());
+      log('Http error ${error.toString()}');
       return false;
     }
   }
