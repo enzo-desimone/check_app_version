@@ -2,6 +2,11 @@
 
 A plugin that allows you to check the **version** of the app installed with a hypothetical version of the app published.
 
+[![Pub Version](https://img.shields.io/pub/v/check_app_version?style=flat-square&logo=dart)](https://pub.dev/packages/check_app_version)
+![Pub Likes](https://img.shields.io/pub/likes/check_app_version)
+![Pub Likes](https://img.shields.io/pub/points/check_app_version)
+![Pub Likes](https://img.shields.io/pub/popularity/check_app_version)
+![GitHub license](https://img.shields.io/github/license/enzo-desimone/check_app_version?style=flat-square)
 
 ## Platform Support
 
@@ -18,7 +23,7 @@ The plugin compares two version codes:
 In fact the package acquires the necessary information for the comparison between the two versions,
 through a JSON file compiled by the user himself.
 
-Example of a JSON file at this [link](https://github.com/enzo-desimone/check_app_version/blob/master/example/example.json).
+![Image](https://github.com/enzo-desimone/check_app_version/blob/master/images/android-screen)
 
 | Key             |       Value |
 |-----------------| ------------- |
@@ -58,6 +63,10 @@ refers to our previously created and customized JSON file
         onPressConfirm: () {},
         ).checkVersion();
 ```
+
+
+Example of a JSON file at this [link](https://github.com/enzo-desimone/check_app_version/blob/master/example/example.json).
+
 
 ### Customize the message dialog
 
