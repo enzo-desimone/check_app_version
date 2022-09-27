@@ -66,23 +66,23 @@ In the **ShowDialog()** method we have many properties to be able to **customize
 
 | Property           |       Function |
 | ------------- | ------------- |
-| **jsonUrl**  | **the JSON Link** (Required) |
+| **jsonUrl**  | **the JSON Link (Required)** |
 | onPressConfirm  | void Function when press confirm button (Required) |
 | onPressDecline  | void Function when press decline button (Required) |
-| showWeb  | if is TRUE the message dialog it will disappear on flutter web app version (default: TRUE) |
+| showWeb  | show the message dialog on flutter web app version (default: TRUE) |
 | dialogRadius  | the message dialog border radius value  |
 | backgroundColor  | the message dialog background color  |
 | title  | the dialog message title  |
 | titleColor  | the dialog message title color  |
 | body  | the dialog message body  |
 | bodyColor  | the dialog message body color  |
-| barrierDismissible  | if is TRUE you can dismiss the message dialog by tapping the modal barrier  |
-| onWillPop  | if is TRUE the message dialog it will disappear using only the action keys (default: TRUE)   |
+| barrierDismissible  | dismiss the message dialog by tapping the modal barrier (default: TRUE) |
+| onWillPop  | disappear the message dialog using only the action keys (default: TRUE)   |
 | updateButtonText  | the update button text  |
 | updateButtonTextColor  | the update button text color  |
 | updateButtonColor  | the update button text color  |
 | updateButtonRadius  | the update button text border radius value  |
 | laterButtonText  | the later button text  |
 | laterButtonColor  | the later button color  |
-| laterButtonEnable  | if is FALSE the later button is not visible (default: FALSE)  |
-| cupertinoDialog  | if is TRUE you can use Cupertino Style for iOS and Material Style for Android (default: TRUE)  |
+| laterButtonEnable  | enable visibility of later button (default: FALSE)  |
+| cupertinoDialog  | use Cupertino Style for iOS and macOS (default: TRUE)  |

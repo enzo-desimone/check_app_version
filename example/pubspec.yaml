@@ -15,9 +15,7 @@ dependencies:
   check_app_version:
     path: ../
 
-  package_info_plus: ^1.4.3+1
-
-  cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.5
 
 dev_dependencies:
   flutter_test:
