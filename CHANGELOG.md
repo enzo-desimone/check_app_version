@@ -1,55 +1,71 @@
-## [0.6.0] - 27/08/2021
-* Update project plugins
+## [1.0.0]
 
-## [0.5.0] - 01/08/2021
-* Fix cupertino Style
-* Update example
+- Add: Windows, MacOS, Linux, Web support
+- Add new proprieties on Show Dialog
+- Add new Confirm & Decline Button custom Function
+- Update Json key
+- Update project plugins
+- Update example
+- Increase null safety
+- Clean code
 
-## [0.4.0] - 23/07/2021
-* Add Auto Cupertino Style
-* Bugs fixed
+## [0.6.0]
 
-## [0.3.0] - 10/03/2021
-* Migrate NULL SAFETY
-* Bugs fixed
+- Update project plugins
 
-## [0.2.1] - 01/03/2021
-* General bug fixed
-* Fix iOS bug
-* New doc
+## [0.5.0]
 
-## [0.1.0] - 08/03/2021
+- Fix cupertino Style
+- Update example
 
-* Update http package
+## [0.4.0]
 
-## [0.0.8] - 16/02/2021
+- Add Auto Cupertino Style
+- Bugs fixed
 
-* Fix iOS bug
+## [0.3.0]
 
-## [0.0.8] - 16/02/2021
+- Migrate NULL SAFETY
+- Bugs fixed
 
-* Fix iOS bug
+## [0.2.1]
 
-## [0.0.6] - 13/01/2021
+- General bug fixed
+- Fix iOS bug
+- New doc
 
-* Fix GUI bug
+## [0.1.0]
 
-## [0.0.5] - 13/01/2021
+- Update http package
 
-* Fix iOS platform
+## [0.0.8] 
 
-## [0.0.4] - 13/01/2021
+- Fix iOS bug
 
-* Bug fix, add comment on widget propriety
+## [0.0.8]
 
-## [0.0.3] - 13/01/2021
+- Fix iOS bug
 
-* Bug fix
+## [0.0.6]
 
-## [0.0.2] - 13/01/2021
+- Fix GUI bug
 
-* Bug fix
+## [0.0.5]
 
-## [0.0.1] - 12/01/2021
+- Fix iOS platform
 
-* Published plugin
+## [0.0.4]
+
+- Bug fix, add comment on widget propriety
+
+## [0.0.3]
+
+- Bug fix
+
+## [0.0.2]
+
+- Bug fix
+
+## [0.0.1]
+
+- Published plugin
