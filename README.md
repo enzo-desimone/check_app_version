@@ -14,6 +14,7 @@ A plugin that allows you to check the **version** of the app installed with a hy
 | :-----: | :-: | :---: | :-: | :---: | :-----: |
 |   ✔️    | ✔️  |  ✔️   | ✔️  |  ✔️   |   ✔️    |
 
+
 ## About
 
 The plugin compares two version codes:
@@ -23,7 +24,6 @@ The plugin compares two version codes:
 In fact the package acquires the necessary information for the comparison between the two versions,
 through a JSON file compiled by the user himself.
 
-![Image](https://github.com/enzo-desimone/check_app_version/blob/master/images/android-screen)
 
 | Key             |       Value |
 |-----------------| ------------- |
@@ -38,11 +38,14 @@ through a JSON file compiled by the user himself.
 | web_package     | ios bundle identify  |
 | ios_app_id      | iOS app id number  |
 
+Example of a JSON file at this [link](https://github.com/enzo-desimone/check_app_version/blob/master/example/example.json).
+
 ## Install
 
 
 ### Import the Check App Version package
 To use the Check App Version package, follow the [plugin installation instructions](https://pub.dev/packages/check_app_version/install).
+
 
 ### Use the package
 
@@ -64,8 +67,9 @@ refers to our previously created and customized JSON file
         ).checkVersion();
 ```
 
+### Image Example
 
-Example of a JSON file at this [link](https://github.com/enzo-desimone/check_app_version/blob/master/example/example.json).
+<img src="https://github.com/enzo-desimone/check_app_version/blob/master/images/android-screen.png" width="350">
 
 
 ### Customize the message dialog
