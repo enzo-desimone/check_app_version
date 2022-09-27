@@ -69,7 +69,7 @@ refers to our previously created and customized JSON file
 
 ### Image Example
 
-<img src="https://github.com/enzo-desimone/check_app_version/blob/master/images/android-screen.png" width="350">
+<img src="https://raw.githubusercontent.com/enzo-desimone/check_app_version/master/images/android-screen.png" width="350">
 
 
 ### Customize the message dialog
