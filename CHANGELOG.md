@@ -1,3 +1,8 @@
+## [1.0.0+1]
+
+- Fix Null Pointer cupertinoDialog
+- Fix screenshot documentation
+
 ## [1.0.0]
 
 - Add: Windows, MacOS, Linux, Web support

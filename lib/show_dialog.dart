@@ -90,7 +90,7 @@ class ShowDialog {
       required this.context,
       required this.onPressConfirm,
       required this.onPressDecline,
-      this.cupertinoDialog,
+      this.cupertinoDialog = true,
       this.title,
       this.body,
       this.updateButtonText,
