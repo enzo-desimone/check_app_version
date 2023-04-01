@@ -1,6 +1,6 @@
 name: check_app_version
 description: The plugin verifies that the version of the installed app is the most up-to-date, if not, it invites the user to update.
-version: 1.0.0+1
+version: 1.0.1
 author: Enzo De Simone <enzodesimone@besimsoft.com>
 homepage: https://github.com/enzo-desimone/check_app_version
 
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
 
   http: ^0.13.5
-  package_info_plus: ^1.4.3+1
+  package_info_plus: ^3.0.3
 
 dev_dependencies:
   flutter_test:

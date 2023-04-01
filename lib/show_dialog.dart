@@ -1,6 +1,6 @@
 import 'dart:core';
 import 'dart:io' show Platform;
-import 'package:check_app_version/check_app_version.dart';
+import 'package:check_app_version/repository/check_app_version.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,13 +22,13 @@ class ShowDialog {
   String jsonUrl;
 
   /// the message dialog border radius value
-  double? dialogRadius;
+  double dialogRadius;
 
   /// the message dialog background color
-  Color? backgroundColor;
+  Color backgroundColor;
 
   /// the dialog message title
-  String? title;
+  String title;
 
   /// the dialog message title color
   Color? titleColor;
@@ -40,23 +40,23 @@ class ShowDialog {
   Color? bodyColor;
 
   /// if is TRUE you can dismiss the message
-  /// dialog by tapping the modal barrier
-  bool? barrierDismissible;
+  /// dialog by tapping the modal barrier (default: TRUE)
+  bool barrierDismissible;
 
   /// if is TRUE you can use Android Style for Android
   /// Cupertino IOS style for iOS
-  bool? cupertinoDialog;
+  bool cupertinoDialog;
 
   /// if is TRUE the message dialog it
   /// will disappear using only the action keys (default: TRUE)
-  bool? onWillPop;
+  bool onWillPop;
 
   /// if is TRUE the message dialog it
   /// will disappear on flutter web app version (default: TRUE)
   bool? showWeb;
 
   /// the update button text
-  String? updateButtonText;
+  String updateButtonText;
 
   /// the update button text color
   Color? updateButtonTextColor;
@@ -68,7 +68,7 @@ class ShowDialog {
   double? updateButtonRadius;
 
   /// the later button text
-  String? laterButtonText;
+  String laterButtonText;
 
   /// the later button color
   Color? laterButtonColor;
@@ -77,10 +77,10 @@ class ShowDialog {
   bool? laterButtonEnable;
 
   /// Function when press Decline button
-  Function() onPressDecline;
+  Function()? onPressDecline;
 
   /// Function when press Confirm button
-  Function() onPressConfirm;
+  Function()? onPressConfirm;
 
   /// Context
   BuildContext context;
@@ -88,24 +88,24 @@ class ShowDialog {
   ShowDialog(
       {required this.jsonUrl,
       required this.context,
-      required this.onPressConfirm,
-      required this.onPressDecline,
+      this.onPressConfirm,
+      this.onPressDecline,
       this.cupertinoDialog = true,
-      this.title,
+      this.title = 'New version',
       this.body,
-      this.updateButtonText,
-      this.laterButtonText,
-      this.laterButtonEnable,
-      this.barrierDismissible,
-      this.onWillPop,
-      this.updateButtonRadius,
+      this.updateButtonText = 'update',
+      this.laterButtonText = 'later',
+      this.laterButtonEnable = true,
+      this.barrierDismissible = true,
+      this.onWillPop = true,
+      this.updateButtonRadius = 10,
       this.updateButtonTextColor,
       this.updateButtonColor,
       this.laterButtonColor,
-      this.dialogRadius,
+      this.dialogRadius = 10,
       this.titleColor,
       this.bodyColor,
-      this.backgroundColor,
+      this.backgroundColor = Colors.white,
       this.showWeb});
 
   Future<void> checkVersion() async {
@@ -118,7 +118,7 @@ class ShowDialog {
           Cav().appFile.macOSPackage == _appPackage ||
           Cav().appFile.webPackage == _appPackage) {
         if (showWeb ?? true && await _getAppVersion()) {
-          if (!(cupertinoDialog!)) {
+          if (!(cupertinoDialog)) {
             updateGenericDialog(context);
           } else {
             if (Platform.isIOS || Platform.isMacOS) {
@@ -135,13 +135,13 @@ class ShowDialog {
   Future<Widget?> updateDialogIos(context) {
     return showCupertinoDialog(
         context: context,
-        barrierDismissible: barrierDismissible ?? true,
+        barrierDismissible: barrierDismissible,
         builder: (BuildContext context) {
           return WillPopScope(
             onWillPop: () => _onWillPopState(context),
             child: CupertinoAlertDialog(
               title: Text(
-                title ?? 'Update App',
+                title,
                 style: TextStyle(color: titleColor ?? Colors.black),
               ),
               content: Text(
@@ -152,15 +152,17 @@ class ShowDialog {
               actions: (laterButtonEnable ?? true)
                   ? <Widget>[
                       CupertinoDialogAction(
-                        onPressed: onPressDecline,
-                        child: Text(laterButtonText ?? 'Later',
+                        onPressed:
+                            onPressDecline ?? () => Navigator.of(context).pop(),
+                        child: Text(laterButtonText,
                             style: TextStyle(
                                 color: laterButtonColor ?? Colors.black)),
                       ),
                       CupertinoDialogAction(
-                        onPressed: onPressConfirm,
+                        onPressed:
+                            onPressConfirm ?? () => Navigator.of(context).pop(),
                         child: Text(
-                          updateButtonText ?? "Update",
+                          updateButtonText,
                           style: TextStyle(
                               color: updateButtonTextColor,
                               fontWeight: FontWeight.bold),
@@ -169,9 +171,10 @@ class ShowDialog {
                     ]
                   : <Widget>[
                       CupertinoDialogAction(
-                        onPressed: onPressConfirm,
+                        onPressed:
+                            onPressConfirm ?? () => Navigator.of(context).pop(),
                         child: Text(
-                          updateButtonText ?? "Update",
+                          updateButtonText,
                           style: TextStyle(
                               color: updateButtonTextColor,
                               fontWeight: FontWeight.bold),
@@ -186,16 +189,16 @@ class ShowDialog {
   Future<Widget?> updateGenericDialog(context) {
     return showDialog(
         context: context,
-        barrierDismissible: barrierDismissible ?? true,
+        barrierDismissible: barrierDismissible,
         builder: (BuildContext context) {
           return WillPopScope(
             onWillPop: () => _onWillPopState(context),
             child: AlertDialog(
-              backgroundColor: backgroundColor ?? Colors.white,
+              backgroundColor: backgroundColor,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(dialogRadius ?? 12.0)),
+                  borderRadius: BorderRadius.circular(dialogRadius)),
               title: Text(
-                title ?? 'Update App',
+                title,
                 style: TextStyle(color: titleColor ?? Colors.black),
               ),
               content: Text(
@@ -207,20 +210,22 @@ class ShowDialog {
                 Visibility(
                   visible: laterButtonEnable ?? true,
                   child: TextButton(
+                    onPressed:
+                        onPressDecline ?? () => Navigator.of(context).pop(),
                     style: ElevatedButton.styleFrom(
                         foregroundColor: updateButtonColor ?? Colors.blue,
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(updateButtonRadius ?? 10),
                         )),
-                    onPressed: onPressDecline,
-                    child: new Text(laterButtonText ?? 'Later',
+                    child: new Text(laterButtonText,
                         style:
                             TextStyle(color: laterButtonColor ?? Colors.black)),
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: onPressConfirm,
+                  onPressed:
+                      onPressConfirm ?? () => Navigator.of(context).pop(),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius:
@@ -229,7 +234,7 @@ class ShowDialog {
                     backgroundColor: updateButtonColor ?? Colors.blue,
                   ),
                   child: Text(
-                    updateButtonText ?? "Update",
+                    updateButtonText,
                     style: TextStyle(
                         color: updateButtonTextColor,
                         fontWeight: FontWeight.bold),
@@ -304,7 +309,7 @@ class ShowDialog {
   }
 
   Future<bool> _onWillPopState(context) async {
-    if (onWillPop != null && !onWillPop!) Navigator.pop(context);
+    if (!onWillPop) Navigator.pop(context);
     return false;
   }
 }

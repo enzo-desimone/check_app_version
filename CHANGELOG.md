@@ -1,3 +1,11 @@
+## [1.0.1]
+
+- Update package
+- Add new ShowCustomDialog for custom dialog
+- Update Example
+- Update documentation
+
+
 ## [1.0.0+1]
 
 - Fix Null Pointer cupertinoDialog

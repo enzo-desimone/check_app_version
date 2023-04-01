@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:check_app_version/json_file.dart';
+import 'package:check_app_version/models/json_file.dart';
 import 'package:http/http.dart' as http;
 
 class CheckAppVersion {
