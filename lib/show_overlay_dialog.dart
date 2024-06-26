@@ -8,6 +8,37 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 typedef Cav = CheckAppVersion;
 
+/*
+// example
+      ShowOverlayDialog(
+        jsonUrl: chkver,
+        context: context,
+        showWeb: true,
+        dialogBuilder: (context, overlayEntry) => AlertDialog(
+          title: const Text(
+            'New Version Available',
+          ),
+          content: const Text('Download Now?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('cancel'),
+              onPressed: () {
+                overlayEntry?.remove();
+              },
+            ),
+            ElevatedButton(
+              child: Text('download'),
+              onPressed: () {
+                launchUrl(uri);
+                overlayEntry?.remove();
+              },
+            ),
+          ],
+        ),
+      ).checkVersion();
+
+*/
+
 class ShowOverlayDialog {
   /// App code id
   late String _appCode;
