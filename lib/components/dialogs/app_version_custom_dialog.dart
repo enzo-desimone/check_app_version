@@ -42,7 +42,7 @@ class AppVersionCustomDialog extends AccessoryCheckUpdate {
     final upd = await checkUpdated();
 
     if ((showWeb ?? true) && upd) {
-      showDialog(
+      showDialog<void>(
         context: context,
         barrierDismissible: barrierDismissible,
         builder: dialogBuilder,

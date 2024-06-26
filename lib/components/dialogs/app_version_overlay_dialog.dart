@@ -5,7 +5,7 @@ class AppVersionOverlayDialog extends AccessoryCheckUpdate {
   AppVersionOverlayDialog({
     required super.jsonUrl,
     required this.context,
-    required this.dialogBuilder,
+    required this.overlayBuilder,
     this.showWeb,
     this.barrierDismissible = true,
   });
@@ -21,8 +21,8 @@ class AppVersionOverlayDialog extends AccessoryCheckUpdate {
   /// dialog by tapping the modal barrier (default: TRUE)
   bool barrierDismissible;
 
-  /// Custom Dialog Builder for use your custom dialog
-  Widget Function(BuildContext, OverlayEntry?) dialogBuilder;
+  /// Custom Overlay Builder for use your custom dialog
+  Widget Function(BuildContext, OverlayEntry?) overlayBuilder;
 
   /// current overlay entry
   late OverlayEntry overlayEntry;
@@ -45,7 +45,7 @@ class AppVersionOverlayDialog extends AccessoryCheckUpdate {
     final upd = await checkUpdated();
     if (showWeb ?? true && upd) {
       overlayEntry = OverlayEntry(
-        builder: (BuildContext context) => dialogBuilder(context, overlayEntry),
+        builder: (BuildContext context) => overlayBuilder(context, overlayEntry),
       );
 
       Overlay.of(context).insert(overlayEntry);

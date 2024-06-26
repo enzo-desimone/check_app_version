@@ -55,7 +55,7 @@ class _GenericDialog extends StatelessWidget {
           style: TextStyle(color: titleColor ?? Colors.black),
         ),
         content: Text(
-          body ?? 'A new version of the app is available ${CheckAppVersion().appFile.newAppVersion!}',
+          body ?? 'A new version of the app is available ${Cav.instance.appFile.newAppVersion!}',
           style: TextStyle(color: bodyColor ?? Colors.black54),
         ),
         actions: [

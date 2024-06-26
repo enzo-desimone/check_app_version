@@ -48,7 +48,7 @@ class _iOSDialog extends StatelessWidget {
         ),
         content: Text(
           body ??
-              'A new version of the app is available ${CheckAppVersion().appFile.newAppVersion!}',
+              'A new version of the app is available ${Cav.instance.appFile.newAppVersion!}',
           style: TextStyle(color: bodyColor ?? Colors.black54),
         ),
         actions: [

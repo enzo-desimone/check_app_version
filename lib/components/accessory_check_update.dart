@@ -6,7 +6,7 @@ export 'dialogs/app_version_custom_dialog.dart';
 export 'dialogs/app_version_dialog.dart';
 export 'dialogs/app_version_overlay_dialog.dart';
 
-abstract class AccessoryCheckUpdate {
+abstract class AccessoryCheckUpdate  {
   AccessoryCheckUpdate({
     required this.jsonUrl,
   });
