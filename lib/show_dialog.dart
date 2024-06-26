@@ -109,7 +109,9 @@ class ShowDialog {
       this.backgroundColor = Colors.white,
       this.showWeb});
 
-  Future<void> checkVersion() async {
+  // is exists a new version?
+  Future<bool> checkVersion() async {
+    bool upd = false;
     await _getAppInfo();
     if (await Cav().getJsonFile(jsonUrl)) {
       if (Cav().appFile.androidPackage == _appPackage ||
@@ -118,11 +120,11 @@ class ShowDialog {
           Cav().appFile.linuxPackage == _appPackage ||
           Cav().appFile.macOSPackage == _appPackage ||
           Cav().appFile.webPackage == _appPackage) {
-        var upd = await _getAppVersion();
+        upd = await _getAppVersion();
         if (showWeb ?? true && upd) {
           if (kIsWeb) {
             updateGenericDialog(context);
-            return;
+            return upd;
           }
           if (!(cupertinoDialog)) {
             updateGenericDialog(context);
@@ -136,6 +138,7 @@ class ShowDialog {
         }
       }
     }
+    return upd;
   }
 
   Future<Widget?> updateDialogIos(context) {
@@ -156,28 +159,40 @@ class ShowDialog {
                 title,
                 style: TextStyle(color: titleColor ?? Colors.black),
               ),
-              content: Text(body ?? 'A new version of the app is available ' + CheckAppVersion().appFile.newAppVersion!,
+              content: Text(
+                  body ??
+                      'A new version of the app is available ' +
+                          CheckAppVersion().appFile.newAppVersion!,
                   style: TextStyle(color: bodyColor ?? Colors.black54)),
               actions: (laterButtonEnable ?? true)
                   ? <Widget>[
                       CupertinoDialogAction(
-                        onPressed: onPressDecline ?? () => Navigator.of(context).pop(),
-                        child: Text(laterButtonText, style: TextStyle(color: laterButtonColor ?? Colors.black)),
+                        onPressed:
+                            onPressDecline ?? () => Navigator.of(context).pop(),
+                        child: Text(laterButtonText,
+                            style: TextStyle(
+                                color: laterButtonColor ?? Colors.black)),
                       ),
                       CupertinoDialogAction(
-                        onPressed: onPressConfirm ?? () => Navigator.of(context).pop(),
+                        onPressed:
+                            onPressConfirm ?? () => Navigator.of(context).pop(),
                         child: Text(
                           updateButtonText,
-                          style: TextStyle(color: updateButtonTextColor, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: updateButtonTextColor,
+                              fontWeight: FontWeight.bold),
                         ),
                       )
                     ]
                   : <Widget>[
                       CupertinoDialogAction(
-                        onPressed: onPressConfirm ?? () => Navigator.of(context).pop(),
+                        onPressed:
+                            onPressConfirm ?? () => Navigator.of(context).pop(),
                         child: Text(
                           updateButtonText,
-                          style: TextStyle(color: updateButtonTextColor, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: updateButtonTextColor,
+                              fontWeight: FontWeight.bold),
                         ),
                       )
                     ],
@@ -201,37 +216,49 @@ class ShowDialog {
             },
             child: AlertDialog(
               backgroundColor: backgroundColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(dialogRadius)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(dialogRadius)),
               title: Text(
                 title,
                 style: TextStyle(color: titleColor ?? Colors.black),
               ),
-              content: Text(body ?? 'A new version of the app is available ' + CheckAppVersion().appFile.newAppVersion!,
+              content: Text(
+                  body ??
+                      'A new version of the app is available ' +
+                          CheckAppVersion().appFile.newAppVersion!,
                   style: TextStyle(color: bodyColor ?? Colors.black54)),
               actions: <Widget>[
                 Visibility(
                   visible: laterButtonEnable ?? true,
                   child: TextButton(
-                    onPressed: onPressDecline ?? () => Navigator.of(context).pop(),
+                    onPressed:
+                        onPressDecline ?? () => Navigator.of(context).pop(),
                     style: ElevatedButton.styleFrom(
                         foregroundColor: updateButtonColor ?? Colors.blue,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(updateButtonRadius ?? 10),
+                          borderRadius:
+                              BorderRadius.circular(updateButtonRadius ?? 10),
                         )),
-                    child: new Text(laterButtonText, style: TextStyle(color: laterButtonColor ?? Colors.black)),
+                    child: new Text(laterButtonText,
+                        style:
+                            TextStyle(color: laterButtonColor ?? Colors.black)),
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: onPressConfirm ?? () => Navigator.of(context).pop(),
+                  onPressed:
+                      onPressConfirm ?? () => Navigator.of(context).pop(),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(updateButtonRadius ?? 10),
+                      borderRadius:
+                          BorderRadius.circular(updateButtonRadius ?? 10),
                     ),
                     backgroundColor: updateButtonColor ?? Colors.blue,
                   ),
                   child: Text(
                     updateButtonText,
-                    style: TextStyle(color: updateButtonTextColor, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: updateButtonTextColor,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -267,28 +294,34 @@ class ShowDialog {
       _appVersion = '0';
     }
     String tempOldCode = '$_appCode.$_appVersion';
-    String tempNewCode = '${Cav().appFile.newAppVersion!}.${Cav().appFile.newAppCode!}';
+    String tempNewCode =
+        '${Cav().appFile.newAppVersion!}.${Cav().appFile.newAppCode!}';
 
     var regEx = RegExp(r'^\d{1,2}', multiLine: true);
 
     for (int i = 0; i < 4; i++) {
-      String oldNumber = regEx.allMatches(tempOldCode).map((m) => m[0]).toString();
+      String oldNumber =
+          regEx.allMatches(tempOldCode).map((m) => m[0]).toString();
 
       final startIndex = oldNumber.indexOf('(');
       final endIndex = oldNumber.indexOf(')', startIndex + '('.length);
 
-      String newNumber = regEx.allMatches(tempNewCode).map((m) => m[0]).toString();
+      String newNumber =
+          regEx.allMatches(tempNewCode).map((m) => m[0]).toString();
 
       final startNewIndex = newNumber.indexOf('(');
       final endNewIndex = newNumber.indexOf(')', startNewIndex + '('.length);
 
-      tempOldCode = tempOldCode.replaceFirst(oldNumber.substring(startIndex + '('.length, endIndex), '');
+      tempOldCode = tempOldCode.replaceFirst(
+          oldNumber.substring(startIndex + '('.length, endIndex), '');
       tempOldCode = tempOldCode.replaceFirst('.', '');
-      tempNewCode = tempNewCode.replaceFirst(newNumber.substring(startNewIndex + '('.length, endNewIndex), '');
+      tempNewCode = tempNewCode.replaceFirst(
+          newNumber.substring(startNewIndex + '('.length, endNewIndex), '');
       tempNewCode = tempNewCode.replaceFirst('.', '');
 
       if (int.parse(oldNumber.substring(startIndex + '('.length, endIndex)) <
-          int.parse(newNumber.substring(startNewIndex + '('.length, endNewIndex))) {
+          int.parse(
+              newNumber.substring(startNewIndex + '('.length, endNewIndex))) {
         flag = true;
         break;
       }

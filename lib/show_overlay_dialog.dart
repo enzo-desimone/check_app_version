@@ -8,7 +8,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 typedef Cav = CheckAppVersion;
 
-class ShowCustomDialog {
+class ShowOverlayDialog {
   /// App code id
   late String _appCode;
 
@@ -33,9 +33,12 @@ class ShowCustomDialog {
   bool barrierDismissible;
 
   /// Custom Dialog Builder for use your custom dialog
-  Widget Function(BuildContext) dialogBuilder;
+  Widget Function(BuildContext, OverlayEntry?) dialogBuilder;
 
-  ShowCustomDialog(
+  /// current overlay entry
+  late OverlayEntry overlayEntry;
+
+  ShowOverlayDialog(
       {required this.jsonUrl,
       required this.context,
       required this.dialogBuilder,
@@ -55,10 +58,11 @@ class ShowCustomDialog {
           Cav().appFile.webPackage == _appPackage) {
         upd = await _getAppVersion();
         if (showWeb ?? true && upd) {
-          showDialog(
-              context: context,
-              barrierDismissible: barrierDismissible,
-              builder: dialogBuilder);
+          overlayEntry = OverlayEntry(
+              builder: (BuildContext context) =>
+                  dialogBuilder(context, overlayEntry));
+          // entry.remove();
+          Overlay.of(context).insert(overlayEntry);
         }
       }
     }
