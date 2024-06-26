@@ -1,24 +1,27 @@
-import 'dart:io';
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+
 import 'package:check_app_version/models/json_file.dart';
 import 'package:http/http.dart' as http;
 
+export 'components/componenets.dart';
+export 'models/json_file.dart';
+export 'utils/utils.dart';
+
 class CheckAppVersion {
-  late JsonFile appFile;
-
-  static final CheckAppVersion _singleton = CheckAppVersion._internal();
-
   factory CheckAppVersion() {
-    return _singleton;
+    return instance;
   }
 
   CheckAppVersion._internal();
 
+  late JsonFile appFile;
+
+  static final CheckAppVersion instance = CheckAppVersion._internal();
+
   bool _isJson(String input) {
     try {
-      // final obj = json.decode(input);
       final obj = json.decode(input);
       if (obj is Map<String, dynamic>) {
         return true;
@@ -62,7 +65,7 @@ class CheckAppVersion {
           raw = response.body;
         }
       } on Exception catch (error) {
-        log('Http error ${error.toString()}');
+        log('Http error $error');
         return false;
       }
     }
@@ -77,7 +80,7 @@ class CheckAppVersion {
           return false;
         }
       } catch (error) {
-        log('File error ${error.toString()}');
+        log('File error $error');
         return false;
       }
     }
@@ -93,25 +96,5 @@ class CheckAppVersion {
 
     log('Input error: invalid input');
     return false;
-
-    // ufn.lastline
   }
-
-/*
-  Future<bool> getJsonFile(String url) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        appFile = JsonFile.fromJson(json.decode(response.body));
-        return true;
-      } else
-        return false;
-    } on Exception catch (error) {
-      log('Http error ${error.toString()}');
-      return false;
-    }
-  }
-*/
-
-  // cls.lastline
 }

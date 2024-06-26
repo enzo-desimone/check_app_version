@@ -52,27 +52,36 @@ To use the Check App Version package, follow the [plugin installation instructio
 
 Add the following import to your Dart code:
 ```dart
-import 'package:check_app_version/show_dialog.dart';
+import 'package:check_app_version/app_version_dialog.dart';
 ```
 
-Now we have two option to show the app version dialog. We can use **ShowDialog(jsonUrl: 'my url').checkVersion()**
+We have three options to show the app version dialog. We can use **AppVersionDialog(jsonUrl: 'my url').show()**
 to check the version and show a dialog with customization properties. If instead we want to use our own Custom Dialog, 
-we can use **ShowCustomDialog(jsonUrl: 'my url').checkVersion()** and add the Builder of our dialog. 
+we can use **AppVersionCustomDialog(jsonUrl: 'my url').show()** and add the Builder of our dialog. If instead we want to use Overlay,
+we can use **AppVersionOverlayDialog(jsonUrl: 'my url').show()** and add the Builder of our dialog.
 Remember to replace **'my link'** with the link that refers to our previously created and customized JSON file
 
 ```dart
-    ShowDialog(
+    AppVersionDialog(
         context: context,
         jsonUrl: 'https://besimsoft.com/example.json',
-        ).checkVersion();
+        ).show();
 ```
 
 ```dart
-    ShowCustomDialog(
+    AppVersionCustomDialog(
         context: context,
         jsonUrl: 'https://besimsoft.com/example.json',
         dialogBuilder: (BuildContext ) => return AlertDialog()
-        ).checkVersion();
+        ).show();
+```
+
+```dart
+    AppVersionOverlayDialog(
+        context: context,
+        jsonUrl: 'https://besimsoft.com/example.json',
+        dialogBuilder: (BuildContext ) => return AlertDialog()
+        ).show();
 ```
 
 ### Image Example
@@ -80,7 +89,7 @@ Remember to replace **'my link'** with the link that refers to our previously cr
 <img src="https://raw.githubusercontent.com/enzo-desimone/check_app_version/master/images/android-screen.png" width="350">
 
 
-### Customize the ShowDialog()
+### Customize the AppVersionDialog()
 
 In the **ShowDialog()** method we have many properties to be able to **customize** massage dialog.
 
@@ -110,7 +119,20 @@ In the **ShowDialog()** method we have many properties to be able to **customize
 | cupertinoDialog       | use Cupertino Style for iOS and macOS (default: TRUE)                   |
 |                       |                                                                         |
 
-### Customize the ShowCustomDialog()
+### Customize the AppVersionCustomDialog()
+
+In the **ShowCustomDialog()** method we have many **required** properties.
+
+
+| Property           | Function                                                                |
+|--------------------|-------------------------------------------------------------------------|
+| **jsonUrl**        | **the JSON Link (Required)**                                            |
+| **context**        | **the Context of Widget Tree (Required)**                               |
+| showWeb            | show the message dialog on flutter web app version (default: TRUE)      |
+| barrierDismissible | dismiss the message dialog by tapping the modal barrier (default: TRUE) |
+|                    |                                                                         |
+
+### Customize the AppVersionOverlayDialog()
 
 In the **ShowCustomDialog()** method we have many **required** properties.
 

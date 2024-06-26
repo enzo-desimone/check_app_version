@@ -1,5 +1,4 @@
-import 'package:check_app_version/show_custom_dialog.dart';
-import 'package:check_app_version/show_dialog.dart';
+import 'package:check_app_version/check_app_version.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -38,14 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _init() async {
-    ShowDialog(
+    AppVersionDialog(
       context: context,
       jsonUrl: 'https://besimsoft.com/example.json',
       updateButtonColor: Colors.blue,
-      cupertinoDialog: true,
+      cupertinoDialog: false,
       onPressDecline: () => Navigator.of(context).pop(),
       onPressConfirm: () => Navigator.of(context).pop(),
-    ).checkVersion();
+    ).show();
   }
 
   Widget build(BuildContext context) {
