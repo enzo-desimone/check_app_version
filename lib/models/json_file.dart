@@ -12,7 +12,9 @@ class JsonFile {
     required this.iOSAppId,
   });
 
-  factory JsonFile.fromJson(dynamic json) {
+  factory JsonFile.fromJson(dynamic jsondata) {
+    // fix: vscode problems, avoid_dynamic_calls
+    final json = jsondata as Map<String, dynamic>;
     return JsonFile(
       appName: json['app_name'] as String?,
       newAppVersion: json['new_app_version'] as String?,

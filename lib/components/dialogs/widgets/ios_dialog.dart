@@ -1,7 +1,7 @@
 part of '../app_version_dialog.dart';
 
-class _iOSDialog extends StatelessWidget {
-  const _iOSDialog({
+class _IOSDialog extends StatelessWidget {
+  const _IOSDialog({
     required this.onWillPop,
     required this.title,
     required this.updateButtonText,

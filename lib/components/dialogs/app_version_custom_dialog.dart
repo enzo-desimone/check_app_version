@@ -42,7 +42,8 @@ class AppVersionCustomDialog extends AccessoryCheckUpdate {
     final upd = await checkUpdated();
 
     if ((showWeb ?? true) && upd) {
-      showDialog<void>(
+      if (!context.mounted) return false;
+      await showDialog<void>(
         context: context,
         barrierDismissible: barrierDismissible,
         builder: dialogBuilder,

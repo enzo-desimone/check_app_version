@@ -43,11 +43,15 @@ class AppVersionOverlayDialog extends AccessoryCheckUpdate {
   /// - `false` otherwise.
   Future<bool> show() async {
     final upd = await checkUpdated();
-    if (showWeb ?? true && upd) {
+    // print('checkUpdated:$upd');
+    // fix: showWeb ?? true && upd; => showWeb ?? (true && upd);
+    if ((showWeb ?? true) && upd) {
       overlayEntry = OverlayEntry(
-        builder: (BuildContext context) => overlayBuilder(context, overlayEntry),
+        builder: (BuildContext context) =>
+            overlayBuilder(context, overlayEntry),
       );
 
+      if (!context.mounted) return false;
       Overlay.of(context).insert(overlayEntry);
     }
     return upd;

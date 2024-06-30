@@ -6,7 +6,7 @@ export 'dialogs/app_version_custom_dialog.dart';
 export 'dialogs/app_version_dialog.dart';
 export 'dialogs/app_version_overlay_dialog.dart';
 
-abstract class AccessoryCheckUpdate  {
+abstract class AccessoryCheckUpdate {
   AccessoryCheckUpdate({
     required this.jsonUrl,
   });
@@ -25,7 +25,7 @@ abstract class AccessoryCheckUpdate  {
 
   Future<bool> checkUpdated() async {
     await getAppInfo();
-    var upd = false;
+    const upd = false;
 
     if (!await Cav.instance.getJsonFile(jsonUrl)) return upd;
 
@@ -41,9 +41,10 @@ abstract class AccessoryCheckUpdate  {
 
     if (!packages.contains(_appPackage)) return upd;
 
-    upd = await getAppVersion();
-
-    return upd;
+    // upd = await getAppVersion();
+    // return upd;
+    // fix: vscode problems, join_return_with_assignment
+    return getAppVersion();
   }
 
   Future<void> getAppInfo() async {
