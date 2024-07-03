@@ -116,14 +116,14 @@ class AppVersionDialog extends AccessoryCheckUpdate {
 
     if (!(showWeb ?? true) || !upd) return upd;
 
-
+    if (!context.mounted) return false;
     if (kIsWeb) {
-      _updateGenericDialog(context);
+      await _updateGenericDialog(context);
     } else if (cupertinoDialog && (Platform.isIOS || Platform.isMacOS)) {
       print(cupertinoDialog);
-      _updateDialogIos(context);
+      await _updateDialogIos(context);
     } else {
-      _updateGenericDialog(context);
+      await _updateGenericDialog(context);
     }
 
     return upd;
@@ -134,7 +134,7 @@ class AppVersionDialog extends AccessoryCheckUpdate {
       context: context,
       barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
-        return _iOSDialog(
+        return _IOSDialog(
           onWillPop: onWillPop,
           title: title,
           titleColor: titleColor,

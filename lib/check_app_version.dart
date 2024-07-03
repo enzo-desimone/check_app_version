@@ -73,7 +73,7 @@ class CheckAppVersion {
     if (_isFile(input)) {
       try {
         final file = File(input);
-        if (await file.exists()) {
+        if (file.existsSync()) {
           raw = await file.readAsString();
         } else {
           log('File notfound $input');
