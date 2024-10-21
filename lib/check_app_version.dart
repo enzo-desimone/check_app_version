@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:check_app_version/models/json_file.dart';
 import 'package:http/http.dart' as http;
 
-export 'components/componenets.dart';
+export 'components/components.dart';
 export 'models/json_file.dart';
 export 'utils/utils.dart';
 
