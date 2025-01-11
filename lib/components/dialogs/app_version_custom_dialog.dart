@@ -41,7 +41,7 @@ class AppVersionCustomDialog extends AccessoryCheckUpdate {
   Future<bool> show() async {
     final upd = await checkUpdated();
 
-    if ((showWeb ?? true) && upd) {
+    if (upd && (showWeb ?? true)) {
       showDialog<void>(
         context: context,
         barrierDismissible: barrierDismissible,
