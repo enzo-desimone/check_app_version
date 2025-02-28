@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1
+
+- Huge thanks [huanguan1978](https://github.com/huanguan1978) and [CabelloIsaac](https://github.com/CabelloIsaac) for this fork [#7](https://github.com/enzo-desimone/check_app_version/pull/7) and [#6](https://github.com/enzo-desimone/check_app_version/pull/6).
+- Updated `http` and `package_info_plus` packages.
+- Updated documentation.
+
 ## 2.0.0
 
 - Huge thanks [huanguan1978](https://github.com/huanguan1978) for this fork [#3](https://github.com/enzo-desimone/check_app_version/pull/3).
