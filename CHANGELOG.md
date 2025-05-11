@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- Updated `http` and package.
+
 ## 2.0.1
 
 - Huge thanks [huanguan1978](https://github.com/huanguan1978) and [CabelloIsaac](https://github.com/CabelloIsaac) for this fork [#7](https://github.com/enzo-desimone/check_app_version/pull/7) and [#6](https://github.com/enzo-desimone/check_app_version/pull/6).
