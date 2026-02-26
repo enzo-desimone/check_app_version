@@ -1,11 +1,48 @@
 {
-  "app_name": "Check App Version",
-  "new_app_version": "1.5.0",
-  "new_app_code": "36",
-  "android_package": "com.besimsoft.example",
-  "ios_package": "com.besimsoft.example",
-  "windows_package" : "example",
-  "linux_package" : "example",
-  "macos_package" : "example",
-  "ios_app_id": "324324"
+  "app_id": "com.example.myapp",
+  "config_version": 1,
+  "platforms": {
+    "android": {
+      "package_name": "com.example.myapp",
+      "min_required_version": "1.5.0",
+      "min_required_build": 36,
+      "latest_version": "1.6.0",
+      "latest_build": 40,
+      "force_update": false
+    },
+    "ios": {
+      "bundle_id": "com.example.myapp",
+      "app_store_id": "1234567890",
+      "min_required_version": "1.5.0",
+      "min_required_build": 36,
+      "latest_version": "1.6.0",
+      "latest_build": 40,
+      "force_update": false
+    },
+    "macos": {
+      "bundle_id": "com.example.myapp.macos",
+      "app_store_id": "1234567890",
+      "min_required_version": "1.4.0",
+      "min_required_build": 30,
+      "latest_version": "1.5.0",
+      "latest_build": 35,
+      "force_update": false
+    },
+    "windows": {
+      "product_id": "9NBLGGH4R315",
+      "min_required_version": "1.3.0",
+      "min_required_build": 25,
+      "latest_version": "1.4.0",
+      "latest_build": 28,
+      "force_update": false
+    },
+    "linux": {
+      "package_name": "myapp",
+      "min_required_version": "1.3.0",
+      "min_required_build": 25,
+      "latest_version": "1.4.0",
+      "latest_build": 28,
+      "force_update": false
+    }
+  }
 }
