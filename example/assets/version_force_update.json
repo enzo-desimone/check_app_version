@@ -1,0 +1,48 @@
+{
+  "app_id": "com.example.myapp",
+  "config_version": 1,
+  "platforms": {
+    "android": {
+      "bundle_id": "com.example.check_app_version_example",
+      "min_required_version": "99.0.0",
+      "min_required_build": 9999,
+      "latest_version": "99.1.0",
+      "latest_build": 10000,
+      "force_update": true
+    },
+    "ios": {
+      "bundle_id": "com.example.check_app_version_example",
+      "app_store_id": "1234567890",
+      "min_required_version": "99.0.0",
+      "min_required_build": 9999,
+      "latest_version": "99.1.0",
+      "latest_build": 10000,
+      "force_update": true
+    },
+    "windows": {
+      "bundle_id": "com.example.checkAppVersionExample",
+      "product_id": "9NBLGGH4R315",
+      "min_required_version": "99.0.0",
+      "min_required_build": 9999,
+      "latest_version": "99.1.0",
+      "latest_build": 10000,
+      "force_update": true
+    },
+    "macos": {
+      "bundle_id": "com.example.checkAppVersionExample",
+      "min_required_version": "99.0.0",
+      "min_required_build": 9999,
+      "latest_version": "99.1.0",
+      "latest_build": 10000,
+      "force_update": true
+    },
+    "linux": {
+      "bundle_id": "com.example.checkAppVersionExample",
+      "min_required_version": "99.0.0",
+      "min_required_build": 9999,
+      "latest_version": "99.1.0",
+      "latest_build": 10000,
+      "force_update": true
+    }
+  }
+}

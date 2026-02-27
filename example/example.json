@@ -4,8 +4,8 @@
   "new_app_code": "36",
   "android_package": "com.besimsoft.example",
   "ios_package": "com.besimsoft.example",
-  "windows_package" : "example",
-  "linux_package" : "example",
-  "macos_package" : "example",
+  "windows_package": "example",
+  "linux_package": "example",
+  "macos_package": "example",
   "ios_app_id": "324324"
 }
