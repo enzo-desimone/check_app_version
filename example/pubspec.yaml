@@ -1,9 +1,7 @@
 name: example
-description: Flutter example for check app version
-
+description: Flutter example for check_app_version
 publish_to: 'none'
-
-version: 1.5.0+35
+version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -11,16 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   check_app_version:
     path: ../
-
-  cupertino_icons: ^1.0.5
+  very_good_analysis: ^10.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
-
   uses-material-design: true

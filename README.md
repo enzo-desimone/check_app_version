@@ -1,241 +1,151 @@
+# check_app_version
 
-# Check App Version
+A beautiful, Clean Architecture Flutter package to elegantly handle app version checks and mandatory updates.
+Out of the box, it provides a unified and simplified API, customizable caching, and ready-to-use modern UI components.
 
-A Flutter plugin to compare the **installed app version** with a hypothetical published version of your app.
+**Platforms:** Android · iOS · Web · macOS · Windows · Linux
 
-[![Pub Version](https://img.shields.io/pub/v/check_app_version?style=flat-square&logo=dart)](https://pub.dev/packages/check_app_version)
-![Pub Likes](https://img.shields.io/pub/likes/check_app_version)
-![Pub Points](https://img.shields.io/pub/points/check_app_version)
-![Pub Popularity](https://img.shields.io/pub/popularity/check_app_version)
-![GitHub license](https://img.shields.io/github/license/enzo-desimone/check_app_version?style=flat-square)
+---
 
+## 🚀 Quick Start
 
-## 📱 Supported Platforms
+The package uses a **single, unified entry point**: `CheckAppVersion.get()`.
+It automatically detects whether you are passing an HTTP URL or a raw JSON string.
 
-| Android | iOS | MacOS | Web | Linux | Windows |
-|:-------:|:---:|:-----:|:---:|:-----:|:-------:|
-|    ✔️   |  ✔️  |   ✔️  |  ✔️  |   ✔️  |    ✔️   |
-
-
-## 🔍 Overview
-
-This plugin compares two versions of your app:
-- The currently **installed** app version on the user's device
-- A **new release** version defined in a JSON file
-
-The plugin retrieves all necessary information for this comparison through a JSON file that you configure.
-
-
-## 📋 JSON Structure
-
-| Key             | Description                                  |
-|-----------------|----------------------------------------------|
-| app_name        | Your application name                        |
-| new_app_version | New app version (e.g., "1.2.3")              |
-| new_app_code    | New app build number                         |
-| android_package | Android package name                         |
-| ios_package     | iOS bundle identifier                        |
-| windows_package | Windows app package name                     |
-| linux_package   | Linux app package name                       |
-| macos_package   | macOS app package name                       |
-| web_package     | Web app package name                         |
-| ios_app_id      | iOS app ID number for App Store redirection  |
-
-👉 [Sample JSON file](https://github.com/enzo-desimone/check_app_version/blob/master/example/example.json)
-
-
-## ⚙️ Installation
-
-### Import the Check App Version package
-To use the Check App Version package, follow the [plugin installation instructions](https://pub.dev/packages/check_app_version/install).
-
-### Basic Usage
-
-Add the following import to your Dart code:
 ```dart
-import 'package:check_app_version/app_version_dialog.dart';
+import 'package:check_app_version/check_app_version.dart';
+
+// The source can be an HTTP Endpoint OR a raw JSON string.
+final decision = await CheckAppVersion.get(
+  'https://example.com/version.json',
+);
+
+if (decision.shouldUpdate) {
+  print('Update available! Reason: ${decision.reason.name}');
+  
+  if (decision.isForceUpdate) {
+    print('This update is mandatory.');
+  }
+}
 ```
 
+---
 
-## 🧩 Display Options
+## 🎨 UI Components
 
-The plugin offers three different ways to display the version update dialog:
+Ready-to-use, modern UI presentations are exposed directly as static methods on `CheckAppVersion`.
 
-### 1. AppVersionDialog
-The standard pre-configured dialog:
-
+### Dialog
 ```dart
-AppVersionDialog(
-  context: context,
-  jsonUrl: 'https://example.com/app_version.json',
-).show();
+CheckAppVersion.showUpdateDialog(
+  context,
+  decision: decision,
+  onOpenStore: () => launchUrl(storeUri),
+);
 ```
 
-### 2. AppVersionCustomDialog
-A dialog you can customize with your own builder:
+### Modal Bottom Sheet
+```dart
+CheckAppVersion.showUpdateModal(
+  context,
+  decision: decision,
+  onOpenStore: () => launchUrl(storeUri),
+);
+```
+
+### Full-Screen Page
+```dart
+CheckAppVersion.showUpdatePage(
+  context,
+  decision: decision,
+  onOpenStore: () => launchUrl(storeUri),
+);
+```
+
+### Overlay
+You can also use the `UpdateOverlay` widget inside a `Stack` to display an in-app banner snippet.
+
+---
+
+## 📦 JSON Schema
+
+The package strictly enforces the following JSON specification for simplicity and robustness:
+
+```json
+{
+  "app_id": "com.example.myapp",
+  "config_version": 1,
+  "platforms": {
+    "android": {
+      "bundle_id": "com.example.myapp",
+      "min_required_version": "1.5.0",
+      "min_required_build": 36,
+      "latest_version": "1.6.0",
+      "latest_build": 40,
+      "force_update": false
+    },
+    "ios": {
+      "bundle_id": "com.example.myapp",
+      "min_required_version": "1.5.0",
+      "min_required_build": 36,
+      "force_update": true
+    }
+  }
+}
+```
+
+*Note: `latest_*` fields are optional (useful for soft-updates). If `force_update` is missing, it defaults to `false`.*
+
+---
+
+## ⚙️ Caching & Policies
+
+Results are cached in-memory with a **10-minute TTL** by default. Control the behavior via `UpdatePolicy`.
 
 ```dart
-AppVersionCustomDialog(
-  context: context,
-  jsonUrl: 'https://example.com/app_version.json',
-  dialogBuilder: (BuildContext context) => AlertDialog(
-    // Your custom dialog here
+final decision = await CheckAppVersion.get(
+  url,
+  policy: const UpdatePolicy(
+    forceRefresh: true, // Bypass cache
+    debugMode: true,    // Log detailed steps
+    cacheTtl: Duration(minutes: 5),
   ),
-).show();
+);
+
+// Clear all cache manually
+CheckAppVersion.clearCache();
 ```
 
-### 3. AppVersionOverlayDialog
-A customizable overlay on top of your UI:
+---
 
-```dart
-AppVersionOverlayDialog(
-  context: context,
-  jsonUrl: 'https://example.com/app_version.json',
-  overlayBuilder: (BuildContext context) => AlertDialog(
-    // Your custom overlay here
-  ),
-).show();
-```
+## 🔄 Migration Guide (v1.x to v2.x)
 
+The package has been completely revamped to offer better Developer Experience (DX) and a cleaner namespace.
 
-## 🖼️ Example
+### What Improved?
+- **Unified API:** No more separate `.endpoint()` or `.file()` methods. Just `.get()`.
+- **Cleaner Namespace:** UI functions like `showUpdateDialog` no longer pollute the global namespace. They belong directly to the `CheckAppVersion` class.
+- **Strict Parsing:** Removed `customMapper` to rely on a solid, guaranteed JSON structure.
 
-<img src="https://raw.githubusercontent.com/enzo-desimone/check_app_version/master/images/android-screen.png" width="350" alt="Example update dialog on Android">
+### How to Migrate
 
+**1. Renamed Class**
+- **Old:** `VersionCheck`
+- **New:** `CheckAppVersion`
 
-## 🎨 Customization
+**2. Unified Fetching**
+- **Old:** `VersionCheck.endpoint('https...')` or `VersionCheck.file('{"json"...}')`
+- **New:** `CheckAppVersion.get('https...')` (Auto-detects URL vs JSON String)
 
-### AppVersionDialog Options
+**3. UI Helpers**
+- **Old:** `showUpdateDialog(context, ...)`
+- **New:** `CheckAppVersion.showUpdateDialog(context, ...)`
+- **Old:** `showUpdateModal(context, ...)`
+- **New:** `CheckAppVersion.showUpdateModal(context, ...)`
+- **Old:** `Navigator.push(context, builder: (_) => UpdatePage(...))`
+- **New:** `CheckAppVersion.showUpdatePage(context, ...)`
 
-| Property               | Description                                   | Type     | Default                | Required |
-|------------------------|-----------------------------------------------|----------|------------------------|:--------:|
-| jsonUrl                | URL to your JSON file                         | String   | -                      | ✅       |
-| context                | BuildContext from widget tree                 | BuildContext | -                  | ✅       |
-| onPressConfirm         | Function called when update button is pressed | Function | null                   | ❌       |
-| onPressDecline         | Function called when decline button is pressed| Function | null                   | ❌       |
-| showWeb                | Show dialog in Flutter web apps               | bool     | true                   | ❌       |
-| dialogRadius           | Border radius of the dialog                   | double   | 8.0                    | ❌       |
-| backgroundColor        | Background color of the dialog                | Color    | Colors.white           | ❌       |
-| title                  | Dialog title text                             | String   | "New Version Available" | ❌       |
-| titleColor             | Color of the dialog title                     | Color    | Colors.black           | ❌       |
-| body                   | Dialog message body                           | String   | "A new version is available. Update now for the latest features." | ❌ |
-| bodyColor              | Color of the message body                     | Color    | Colors.black54         | ❌       |
-| barrierDismissible     | Close dialog by tapping outside               | bool     | true                   | ❌       |
-| onWillPop              | Close dialog only using action buttons        | bool     | true                   | ❌       |
-| updateButtonText       | Text for the update button                    | String   | "Update Now"           | ❌       |
-| updateButtonTextColor  | Text color for the update button              | Color    | Colors.white           | ❌       |
-| updateButtonColor      | Background color of the update button         | Color    | Colors.blue            | ❌       |
-| updateButtonRadius     | Border radius of the update button            | double   | 4.0                    | ❌       |
-| laterButtonText        | Text for the "Later" button                   | String   | "Later"                | ❌       |
-| laterButtonColor       | Color of the "Later" button                   | Color    | Colors.grey            | ❌       |
-| laterButtonEnable      | Show the "Later" button                       | bool     | false                  | ❌       |
-| cupertinoDialog        | Use Cupertino style on iOS and macOS          | bool     | true                   | ❌       |
+**4. Custom Mappers (Removed)**
+- **Old:** `UpdatePolicy(customMapper: ...)`
+- **New:** Ensure your remote JSON strictly matches the default schema. `customMapper` was removed to enforce a standard structure.
 
-### AppVersionCustomDialog Options
-
-| Property            | Description                                  | Type                      | Default | Required |
-|---------------------|----------------------------------------------|---------------------------|---------|:--------:|
-| jsonUrl             | URL to your JSON file                        | String                    | -       | ✅       |
-| context             | BuildContext from widget tree                | BuildContext              | -       | ✅       |
-| dialogBuilder       | Custom dialog builder function               | Widget Function(BuildContext) | -   | ✅       |
-| showWeb             | Show dialog in Flutter web apps              | bool                      | true    | ❌       |
-| barrierDismissible  | Close dialog by tapping outside              | bool                      | true    | ❌       |
-
-### AppVersionOverlayDialog Options
-
-| Property            | Description                                  | Type                      | Default | Required |
-|---------------------|----------------------------------------------|---------------------------|---------|:--------:|
-| jsonUrl             | URL to your JSON file                        | String                    | -       | ✅       |
-| context             | BuildContext from widget tree                | BuildContext              | -       | ✅       |
-| overlayBuilder      | Custom overlay builder function              | Widget Function(BuildContext) | -   | ✅       |
-| showWeb             | Show dialog in Flutter web apps              | bool                      | true    | ❌       |
-| barrierDismissible  | Close dialog by tapping outside              | bool                      | true    | ❌       |
-
-
-## 📝 Version Comparison Logic
-
-The plugin automatically compares the installed version with the one specified in your JSON to determine if an update is needed. The comparison is performed on both the semantic version number and the app build code.
-
-
-## 🔄 Complete Usage Example
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:check_app_version/app_version_dialog.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-    // Check for updates when app starts
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkForUpdates();
-    });
-  }
-
-  void checkForUpdates() {
-    AppVersionDialog(
-      context: context,
-      jsonUrl: 'https://yourdomain.com/app_version.json',
-      onPressConfirm: () {
-        // Action when user chooses to update
-        print('User chose to update');
-      },
-      onPressDecline: () {
-        // Action when user declines update
-        print('User chose to postpone');
-      },
-      laterButtonEnable: true,
-    ).show();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Check App Version Demo')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: checkForUpdates,
-          child: Text('Check for Updates'),
-        ),
-      ),
-    );
-  }
-}
-```
-
-
-## 💡 Common Use Cases
-
-- **Mandatory updates**: Use `laterButtonEnable: false` to force updates
-- **Periodic notifications**: Show the dialog only after a certain period since dismissal
-- **A/B update testing**: Use different JSON files for different user segments
-- **Cross-platform consistency**: Ensure the same update behavior across all platforms
-
-
-## 🤝 Contributing
-
-Contributions are welcome! Open an [issue](https://github.com/enzo-desimone/check_app_version/issues) or submit a [pull request](https://github.com/enzo-desimone/check_app_version/pulls).
-
-
-## 📃 License
-
-This package is released under the MIT license. See the [LICENSE](https://github.com/enzo-desimone/check_app_version/blob/master/LICENSE) file for more details.
