@@ -1,7 +1,7 @@
-# 🚀 check_app_version
+# 🚀 Check App Version
 
 <p align="center">
-  <img src="images/banner.png" alt="check_app_version Banner" width="100%" />
+  <img src="https://raw.githubusercontent.com/enzo-desimone/check_app_version/master/example/check_app_version.webp" alt="Firebase Verify Token" width="400" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" style="border-radius: 10px;" />
 </p>
 
 [![Pub Version](https://img.shields.io/pub/v/check_app_version?style=for-the-badge&logo=dart&color=0052CC)](https://pub.dev/packages/check_app_version)
