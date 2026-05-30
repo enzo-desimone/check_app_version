@@ -29,3 +29,9 @@ example/.flutter-plugins-dependencies
 # Tests & Coverage
 coverage/
 *.log
+
+# Exclude example iOS/macOS workspace/lock files from published package
+example/ios/Podfile.lock
+example/macos/Podfile.lock
+example/macos/Runner.xcodeproj/
+example/macos/Runner.xcworkspace/
