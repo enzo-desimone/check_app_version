@@ -8,8 +8,15 @@ import 'package:check_app_version/src/domain/entities/supported_platform.dart';
 import 'package:check_app_version/src/domain/entities/update_decision.dart';
 import 'package:check_app_version/src/domain/entities/update_policy.dart';
 import 'package:check_app_version/src/domain/usecases/check_for_update.dart';
+import 'package:check_app_version/src/presentation/ui/update_dialog.dart'
+    as ui_dialog;
+import 'package:check_app_version/src/presentation/ui/update_modal.dart'
+    as ui_modal;
+import 'package:check_app_version/src/presentation/ui/update_page.dart'
+    as ui_page;
 import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform, kIsWeb;
+import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 export 'src/domain/entities/supported_platform.dart';
@@ -22,14 +29,6 @@ export 'src/domain/entities/update_policy.dart';
 // or we can add static methods for them too.
 export 'src/presentation/ui/update_overlay.dart';
 export 'src/presentation/ui/update_page.dart';
-
-import 'package:check_app_version/src/presentation/ui/update_dialog.dart'
-    as ui_dialog;
-import 'package:check_app_version/src/presentation/ui/update_modal.dart'
-    as ui_modal;
-import 'package:check_app_version/src/presentation/ui/update_page.dart'
-    as ui_page;
-import 'package:flutter/material.dart';
 
 /// Log name used when [UpdatePolicy.debugMode] is on.
 const _logName = 'check_app_version';
@@ -108,10 +107,10 @@ class CheckAppVersion {
         ttl: policy.cacheTtl,
       );
       return decision;
-    } on Exception catch (e, stackTrace) {
+    } catch (e, stackTrace) {
       _debugError(policy, 'get($source)', e, stackTrace);
       return UpdateDecision.error(
-        e is FormatException
+        (e is FormatException || e is TypeError)
             ? UpdateReason.parseError
             : UpdateReason.networkError,
       );
@@ -186,6 +185,7 @@ class CheckAppVersion {
     String? message,
     String updateLabel = 'Update',
     String laterLabel = 'Later',
+    bool popAfterPressed = true,
   }) {
     return ui_dialog.showUpdateDialog(
       context,
@@ -196,6 +196,7 @@ class CheckAppVersion {
       message: message,
       updateLabel: updateLabel,
       laterLabel: laterLabel,
+      popAfterPressed: popAfterPressed,
     );
   }
 
@@ -209,6 +210,7 @@ class CheckAppVersion {
     String? message,
     String updateLabel = 'Update Now',
     String laterLabel = 'Later',
+    bool popAfterPressed = true,
   }) {
     return ui_modal.showUpdateModal(
       context,
@@ -219,6 +221,7 @@ class CheckAppVersion {
       message: message,
       updateLabel: updateLabel,
       laterLabel: laterLabel,
+      popAfterPressed: popAfterPressed,
     );
   }
 
@@ -232,6 +235,7 @@ class CheckAppVersion {
     String? message,
     String updateLabel = 'Update Now',
     IconData icon = Icons.system_update,
+    bool popAfterPressed = true,
   }) {
     return Navigator.of(context).push<T>(
       MaterialPageRoute<T>(
@@ -242,6 +246,7 @@ class CheckAppVersion {
           message: message,
           updateLabel: updateLabel,
           icon: icon,
+          popAfterPressed: popAfterPressed,
         ),
       ),
     );

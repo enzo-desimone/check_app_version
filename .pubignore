@@ -1,0 +1,31 @@
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pub/Dart build output
+.dart_tool/
+.packages
+build/
+.pub/
+.pub-cache/
+
+# Local configuration
+local.properties
+
+# Examples build output
+example/build/
+example/.dart_tool/
+example/.packages
+example/.flutter-plugins
+example/.flutter-plugins-dependencies
+
+# Tests & Coverage
+coverage/
+*.log
