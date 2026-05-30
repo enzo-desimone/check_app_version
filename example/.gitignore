@@ -891,4 +891,4 @@ DerivedData/
 
 
 #Added by Fradesa
-macos/Runner.xcodeproj
+!**/Podfile.lock
