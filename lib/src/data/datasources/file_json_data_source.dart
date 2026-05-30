@@ -32,7 +32,7 @@ class FileJsonDataSource {
       final assetStr = await rootBundle.loadString(input);
       final decoded = json.decode(assetStr);
       if (decoded is Map<String, dynamic>) return decoded;
-    } on Exception {
+    } catch (_) {
       // Not an asset — fall through.
     }
 

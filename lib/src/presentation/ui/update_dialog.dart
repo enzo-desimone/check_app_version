@@ -22,6 +22,7 @@ Future<void> showUpdateDialog(
   String? message,
   String updateLabel = 'Update',
   String laterLabel = 'Later',
+  bool popAfterPressed = true,
 }) {
   final theme = Theme.of(context);
   final body = message ??
@@ -48,7 +49,12 @@ Future<void> showUpdateDialog(
                 child: Text(laterLabel),
               ),
             FilledButton(
-              onPressed: onOpenStore,
+              onPressed: () {
+                if (popAfterPressed) {
+                  Navigator.of(ctx).pop();
+                }
+                onOpenStore();
+              },
               child: Text(updateLabel),
             ),
           ],

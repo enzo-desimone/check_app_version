@@ -13,6 +13,7 @@ Future<void> showUpdateModal(
   String? message,
   String updateLabel = 'Update Now',
   String laterLabel = 'Later',
+  bool popAfterPressed = true,
 }) {
   final theme = Theme.of(context);
   final body = message ??
@@ -53,8 +54,8 @@ Future<void> showUpdateModal(
                   height: 4,
                   margin: const EdgeInsets.only(bottom: 24),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.onSurfaceVariant
-                        .withValues(alpha: 0.4),
+                    // ignore: deprecated_member_use
+                    color: theme.colorScheme.onSurfaceVariant.withOpacity(0.4),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -79,7 +80,12 @@ Future<void> showUpdateModal(
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
-                    onPressed: onOpenStore,
+                    onPressed: () {
+                      if (popAfterPressed) {
+                        Navigator.of(ctx).pop();
+                      }
+                      onOpenStore();
+                    },
                     child: Text(updateLabel),
                   ),
                 ),

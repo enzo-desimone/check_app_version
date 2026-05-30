@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.0.0
+
+- **Clean Architecture Migration**: Re-architected the package into logical layers (`data`, `domain`, `presentation`) for enhanced modularity, clean boundaries, and complete testability (44 unit/integration tests).
+- **Unified & Intelligent Entrypoint**: Introduced `CheckAppVersion.get()` which dynamically handles both remote HTTP API endpoints and raw local JSON strings.
+- **Granular Platform-Specific Schema**: Upgraded from flat JSON config keys to platform-specific nodes. Different platforms can now have distinct bundle IDs, minimum version thresholds (`min_required_version` / `min_required_build`), and independent `force_update` requirements.
+- **In-Memory Caching**: Added intelligent result caching with a default 10-minute TTL, configurable or bypassable using `UpdatePolicy`.
+- **Modern Material 3 Presentations**: Included beautiful built-in UI components (Dialog, Modal Bottom Sheet, Full-Screen blocking page, and Overlay banner) that automatically adapt to light/dark themes.
+- **Improved SDK Compatibility**: Fixed compile errors on Flutter versions below 3.22 by using retro-compatible color opacity APIs.
+- **Robust Crash-Prevention**: Broadened exception handling to catch both `Exception` and `Error` types (e.g., `TypeError` from malformed JSON and `FlutterError` from missing local assets) returning clean error decisions instead of crashing.
+- **Automatic Dialog Dismissal (`popAfterPressed`)**: Implemented a new `popAfterPressed` parameter (defaults to `true`) across all UI helpers to automatically dismiss dialogs and modals upon tapping update.
+
 ## 2.1.0
 
 - Updated `http` and package.

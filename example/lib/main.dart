@@ -19,7 +19,6 @@ class ExampleApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(Brightness.light),
       darkTheme: _buildTheme(Brightness.dark),
-      themeMode: ThemeMode.system,
       home: const DemoPage(),
     );
   }
@@ -109,7 +108,6 @@ class _DemoPageState extends State<DemoPage> {
         decision: decision,
         onOpenStore: () {
           _appendLog('User tapped Update in Dialog');
-          Navigator.of(context).pop();
         },
       );
     }
@@ -127,7 +125,6 @@ class _DemoPageState extends State<DemoPage> {
         decision: decision,
         onOpenStore: () {
           _appendLog('User tapped Update in Modal');
-          Navigator.of(context).pop();
         },
       );
     }
@@ -159,7 +156,6 @@ class _DemoPageState extends State<DemoPage> {
         decision: decision,
         onOpenStore: () {
           _appendLog('User tapped Update in Route');
-          Navigator.of(context).pop();
         },
       );
     }
@@ -253,6 +249,7 @@ class _DemoPageState extends State<DemoPage> {
                         const BorderRadius.vertical(top: Radius.circular(32)),
                     boxShadow: [
                       BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.black.withOpacity(0.05),
                         blurRadius: 10,
                         offset: const Offset(0, -5),
@@ -265,8 +262,10 @@ class _DemoPageState extends State<DemoPage> {
                         padding: const EdgeInsets.all(16),
                         child: Row(
                           children: [
-                            Icon(Icons.terminal_rounded,
-                                color: colorScheme.primary),
+                            Icon(
+                              Icons.terminal_rounded,
+                              color: colorScheme.primary,
+                            ),
                             const SizedBox(width: 8),
                             Text(
                               'Activity Log',
@@ -370,8 +369,11 @@ class _DemoPageState extends State<DemoPage> {
         children: [
           Row(
             children: [
-              Icon(Icons.system_update_rounded,
-                  color: colorScheme.onPrimaryContainer, size: 32),
+              Icon(
+                Icons.system_update_rounded,
+                color: colorScheme.onPrimaryContainer,
+                size: 32,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(

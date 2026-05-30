@@ -14,6 +14,7 @@ class UpdatePage extends StatelessWidget {
     this.message,
     this.updateLabel = 'Update Now',
     this.icon = Icons.system_update,
+    this.popAfterPressed = true,
     super.key,
   });
 
@@ -34,6 +35,9 @@ class UpdatePage extends StatelessWidget {
 
   /// Icon displayed above the title.
   final IconData icon;
+
+  /// Whether to pop the page after the update button is pressed.
+  final bool popAfterPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +84,12 @@ class UpdatePage extends StatelessWidget {
                     width: double.infinity,
                     height: 48,
                     child: FilledButton(
-                      onPressed: onOpenStore,
+                      onPressed: () {
+                        if (popAfterPressed) {
+                          Navigator.of(context).pop();
+                        }
+                        onOpenStore();
+                      },
                       child: Text(updateLabel),
                     ),
                   ),
