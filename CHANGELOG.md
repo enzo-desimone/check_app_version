@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.0.1
+
+- **Dependency Updates**: Upgraded `package_info_plus` to `^10.2.1`.
+- **Environment & Linting**:
+  - Updated minimum Flutter SDK constraint to `>=3.38.1` and Dart SDK to `>=3.10.0 <4.0.0`.
+  - Migrated example project dev dependencies to `flutter_lints` `^6.0.0`.
+- **Assets & Documentation**:
+  - Updated `example.json` to demonstrate the platform-nested JSON configuration schema across all supported platforms.
+- **Packaging & Cleanup**:
+  - Enhanced `.pubignore` and `.gitignore` rules to keep the published package clean.
+
 ## 3.0.0
 
 - **Clean Architecture Migration**: Re-architected the package into logical layers (`data`, `domain`, `presentation`) for enhanced modularity, clean boundaries, and complete testability (44 unit/integration tests).

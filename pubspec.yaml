@@ -4,7 +4,7 @@ description: >
   version is up-to-date, supporting file and HTTP endpoint
   JSON sources with in-memory caching and optional UI
   utilities.
-version: 3.0.0
+version: 3.0.1
 homepage: https://github.com/enzo-desimone/check_app_version
 
 environment:
@@ -15,7 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.6.0
-  package_info_plus: ^10.1.0
+  package_info_plus: ^10.2.1
 
 dev_dependencies:
   flutter_lints: ^6.0.0
