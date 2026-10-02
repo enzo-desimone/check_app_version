@@ -4,8 +4,12 @@ description: >
   version is up-to-date, supporting file and HTTP endpoint
   JSON sources with in-memory caching and optional UI
   utilities.
-version: 3.0.1
+version: 3.0.2
 homepage: https://github.com/enzo-desimone/check_app_version
+
+screenshots:
+  - description: "Cross-platform Flutter in-app update checker displaying customizable force update dialog, version comparison, and remote JSON validation."
+    path: example/check-app-version.webp
 
 environment:
   sdk: ">=3.10.0 <4.0.0"

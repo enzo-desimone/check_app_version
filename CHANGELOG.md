@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.2
+
+- **Documentation & Showcase**: Added package screenshot metadata in `pubspec.yaml` for pub.dev preview.
+
 ## 3.0.1
 
 - **Dependency Updates**: Upgraded `package_info_plus` to `^10.2.1`.
