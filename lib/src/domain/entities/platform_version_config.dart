@@ -57,15 +57,15 @@ class PlatformVersionConfig {
 
   /// Serializes to a JSON-compatible map.
   Map<String, dynamic> toJson() => {
-        'bundle_id': bundleId,
-        if (appStoreId != null) 'app_store_id': appStoreId,
-        if (productId != null) 'product_id': productId,
-        'min_required_version': minRequiredVersion,
-        'min_required_build': minRequiredBuild,
-        if (latestVersion != null) 'latest_version': latestVersion,
-        if (latestBuild != null) 'latest_build': latestBuild,
-        'force_update': forceUpdate,
-      };
+    'bundle_id': bundleId,
+    if (appStoreId != null) 'app_store_id': appStoreId,
+    if (productId != null) 'product_id': productId,
+    'min_required_version': minRequiredVersion,
+    'min_required_build': minRequiredBuild,
+    if (latestVersion != null) 'latest_version': latestVersion,
+    if (latestBuild != null) 'latest_build': latestBuild,
+    'force_update': forceUpdate,
+  };
 
   /// Returns a copy with the given fields replaced.
   PlatformVersionConfig copyWith({
@@ -106,18 +106,19 @@ class PlatformVersionConfig {
 
   @override
   int get hashCode => Object.hash(
-        bundleId,
-        appStoreId,
-        productId,
-        minRequiredVersion,
-        minRequiredBuild,
-        latestVersion,
-        latestBuild,
-        forceUpdate,
-      );
+    bundleId,
+    appStoreId,
+    productId,
+    minRequiredVersion,
+    minRequiredBuild,
+    latestVersion,
+    latestBuild,
+    forceUpdate,
+  );
 
   @override
-  String toString() => 'PlatformVersionConfig('
+  String toString() =>
+      'PlatformVersionConfig('
       'bundleId: $bundleId, '
       'appStoreId: $appStoreId, '
       'productId: $productId, '

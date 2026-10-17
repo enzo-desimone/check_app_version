@@ -30,10 +30,7 @@ class EndpointJsonDataSource {
       final response = await client.get(Uri.parse(url)).timeout(timeout);
 
       if (response.statusCode != 200) {
-        throw HttpException(
-          'HTTP ${response.statusCode}',
-          url: url,
-        );
+        throw HttpException('HTTP ${response.statusCode}', url: url);
       }
 
       final decoded = json.decode(response.body);

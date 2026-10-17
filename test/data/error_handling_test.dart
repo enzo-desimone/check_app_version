@@ -38,35 +38,29 @@ void main() {
       );
     });
 
-    test(
-      'missing platform returns platformUnsupported',
-      () async {
-        final repo = VersionRepositoryImpl(
-          loader: () async => const {
-            'platforms': {
-              'ios': {
-                'bundle_id': 'com.example.app',
-                'min_required_version': '1.0.0',
-                'min_required_build': 1,
-              },
+    test('missing platform returns platformUnsupported', () async {
+      final repo = VersionRepositoryImpl(
+        loader: () async => const {
+          'platforms': {
+            'ios': {
+              'bundle_id': 'com.example.app',
+              'min_required_version': '1.0.0',
+              'min_required_build': 1,
             },
           },
-        );
+        },
+      );
 
-        final useCase = CheckForUpdate(repo);
-        final result = await useCase.call(
-          platform: SupportedPlatform.android,
-          installedVersion: '1.0.0',
-          installedBuild: 1,
-        );
+      final useCase = CheckForUpdate(repo);
+      final result = await useCase.call(
+        platform: SupportedPlatform.android,
+        installedVersion: '1.0.0',
+        installedBuild: 1,
+      );
 
-        expect(result.shouldUpdate, isFalse);
-        expect(
-          result.reason,
-          UpdateReason.platformUnsupported,
-        );
-      },
-    );
+      expect(result.shouldUpdate, isFalse);
+      expect(result.reason, UpdateReason.platformUnsupported);
+    });
   });
 
   group('UpdateDecision model', () {
@@ -116,9 +110,7 @@ void main() {
     });
 
     test('toString contains key fields', () {
-      const d = UpdateDecision.error(
-        UpdateReason.networkError,
-      );
+      const d = UpdateDecision.error(UpdateReason.networkError);
       expect(d.toString(), contains('networkError'));
     });
   });

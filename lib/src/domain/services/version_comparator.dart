@@ -51,11 +51,7 @@ class VersionComparator {
     }
 
     // ── 2. Semantic version check (hard minimum) ──
-    if (_compareSemver(
-          installedVersion,
-          config.minRequiredVersion,
-        ) <
-        0) {
+    if (_compareSemver(installedVersion, config.minRequiredVersion) < 0) {
       return base.copyWith(
         shouldUpdate: true,
         isForceUpdate: config.forceUpdate,
@@ -72,11 +68,7 @@ class VersionComparator {
     }
 
     if (config.latestVersion != null &&
-        _compareSemver(
-              installedVersion,
-              config.latestVersion!,
-            ) <
-            0) {
+        _compareSemver(installedVersion, config.latestVersion!) < 0) {
       return base.copyWith(
         shouldUpdate: true,
         reason: UpdateReason.belowLatest,
@@ -98,8 +90,9 @@ class VersionComparator {
   static int _compareSemver(String a, String b) {
     final aParts = _parseSegments(a);
     final bParts = _parseSegments(b);
-    final length =
-        aParts.length > bParts.length ? aParts.length : bParts.length;
+    final length = aParts.length > bParts.length
+        ? aParts.length
+        : bParts.length;
 
     for (var i = 0; i < length; i++) {
       final av = i < aParts.length ? aParts[i] : 0;

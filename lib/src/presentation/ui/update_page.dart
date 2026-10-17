@@ -42,7 +42,8 @@ class UpdatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final body = message ??
+    final body =
+        message ??
         'Your current version '
             '(${decision.installedVersion}) is no longer '
             'supported.\n\n'
@@ -56,17 +57,11 @@ class UpdatePage extends StatelessWidget {
         body: SafeArea(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    icon,
-                    size: 80,
-                    color: theme.colorScheme.primary,
-                  ),
+                  Icon(icon, size: 80, color: theme.colorScheme.primary),
                   const SizedBox(height: 24),
                   Text(
                     title,

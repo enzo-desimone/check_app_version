@@ -13,7 +13,7 @@
 
 ---
 
-**Check App Version** is the modern, robust, and elegant solution to manage application versioning and updates in Flutter. Evaluate installed versions against remote or local configuration sources in a single line of code, handle both soft and mandatory updates effortlessly, and present ready-to-use Material 3 UI layouts that automatically adapt to your application theme.
+**Check App Version** is the complete **Flutter in-app update and version checker** for **Android, iOS, Web, macOS, Windows, and Linux**. Check installed versions automatically against the **Apple App Store**, **Google Play Store**, or a custom **remote/local JSON** config. Handle **force updates**, **soft updates**, **smart snooze ("remind me later")**, and **version skipping** with declarative **`UpdateGate`** widgets and ready-to-use **Material 3 & adaptive Cupertino** UIs.
 
 ---
 
@@ -22,9 +22,12 @@
 - [✨ Features](#-features)
 - [📦 Installation](#-installation)
 - [🚀 Quick Start](#-quick-start)
+- [🔥 Zero-Backend Store Lookup](#-zero-backend-store-lookup)
+- [🧱 Declarative `UpdateGate` Widget](#-declarative-updategate-widget)
+- [⏸️ Smart Snooze & Skip Version](#️-smart-snooze--skip-version)
 - [📑 JSON Configuration Schema](#-json-configuration-schema)
 - [🎨 Presentation Layouts](#-presentation-layouts)
-  - [1. Classic Dialog](#1-classic-dialog)
+  - [1. Classic & Adaptive Cupertino Dialog](#1-classic--adaptive-cupertino-dialog)
   - [2. Modal Bottom Sheet](#2-modal-bottom-sheet)
   - [3. Full-Screen Blocking Page](#3-full-screen-blocking-page)
   - [4. Top Overlay Banner](#4-top-overlay-banner)
@@ -38,10 +41,12 @@
 
 ## ✨ Features
 
-- **⚡ 30-Second Implementation**: A single, static entry point (`CheckAppVersion.get(...)`) handles network requests, local assets, caching, and semver comparison.
-- **🎨 4 Ready-to-Use Material 3 UIs**: Pre-built Dialogs, Modal Bottom Sheets, Full-Screen Pages, and animated Overlay Banners that adapt automatically to Light and Dark modes.
-- **📱 Granular Platform Isolation**: Configure isolated thresholds and flags per platform (`android`, `ios`, `macos`, `windows`, `linux`, `web`). Enforce a mandatory update on iOS while keeping it optional on Android.
-- **🌐 Any Source Supported**: Accepts remote HTTP/HTTPS URLs, Flutter asset paths (`assets/version.json`), or raw JSON strings.
+- **⚡ 30-Second Implementation**: A single, static entry point (`CheckAppVersion.get(...)` or `CheckAppVersion.fromStores()`) handles network requests, local assets, store lookups, caching, and semver comparison.
+- **🔥 Zero-Backend Store Lookup**: Query **Apple App Store** (iOS/macOS) and **Google Play Store** (Android) directly using your installed bundle/package ID — no custom backend JSON required!
+- **🧱 Declarative `UpdateGate` Wrapper**: Drop `UpdateGate` around your home screen to automatically check on startup and when returning from the background (`checkOnResume: true`).
+- **⏸️ Smart Snooze & Skip Version**: Built-in `snoozeDuration` ("Remind me later") and `skipVersion` ("Skip this version") that respect user preferences on soft updates while never suppressing mandatory updates.
+- **🎨 4 Ready-to-Use UIs + Adaptive Cupertino**: Pre-built Dialogs (Material 3 or native iOS/macOS `CupertinoAlertDialog` via `adaptive: true`), Modal Bottom Sheets, Full-Screen Pages, and animated Overlay Banners.
+- **📱 Granular Platform Isolation**: Configure isolated thresholds and flags per platform (`android`, `ios`, `macos`, `windows`, `linux`, `web`).
 - **🧠 Smart In-Memory Caching**: Avoids redundant network roundtrips with configurable TTL (10-minute default) and cache invalidation methods.
 - **🛡️ Resilient & Crash-Proof**: Catches format and network errors (`TypeError`, `FormatException`, timeouts) returning clean, inspectable status codes instead of throwing unhandled exceptions.
 
@@ -59,7 +64,7 @@ Or add it directly to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  check_app_version: ^3.0.1
+  check_app_version: ^3.1.0
 ```
 
 ---
@@ -119,6 +124,69 @@ Future<void> checkForUpdates(BuildContext context) async {
     );
   }
 }
+```
+
+---
+
+## 🔥 Zero-Backend Store Lookup
+
+Don't want to host a `version.json` file? Query the **Apple App Store** (iOS/macOS) and **Google Play Store** (Android) directly using `CheckAppVersion.fromStores()` (or pass `'store'` to `CheckAppVersion.get('store')`):
+
+```dart
+final decision = await CheckAppVersion.fromStores(
+  countryCode: 'us',   // Two-letter ISO store country code
+  forceUpdate: false,  // Set true to treat store updates as mandatory
+);
+
+if (decision.shouldUpdate && context.mounted) {
+  CheckAppVersion.showUpdateDialog(
+    context,
+    decision: decision,
+    adaptive: true, // Native CupertinoAlertDialog on iOS/macOS!
+    onOpenStore: () => openStore(),
+  );
+}
+```
+
+---
+
+## 🧱 Declarative `UpdateGate` Widget
+
+Wrap your home screen with `UpdateGate` to handle version checks declaratively on startup and automatically re-verify whenever the app resumes from the background (`checkOnResume: true`):
+
+```dart
+UpdateGate(
+  source: 'https://example.com/version.json', // or 'store'
+  style: UpdatePresentationStyle.dialog,      // dialog, modal, page, overlay
+  checkOnResume: true,                        // Re-checks when app returns to foreground
+  adaptive: true,                             // Native Cupertino dialog on iOS/macOS
+  snoozeDuration: const Duration(days: 3),    // Snooze for 3 days on "Later"
+  showSkipVersion: true,                      // Show "Skip this version" button
+  onOpenStore: () => openStore(),
+  child: const HomeScreen(),
+)
+```
+
+---
+
+## ⏸️ Smart Snooze & Skip Version
+
+Prevent update fatigue on non-mandatory updates (`isForceUpdate == false`). Mandatory updates **always** bypass snooze and skip states.
+
+```dart
+// Automatically snooze when the user taps "Later" or "Skip this version" in UI:
+CheckAppVersion.showUpdateDialog(
+  context,
+  decision: decision,
+  snoozeDuration: const Duration(days: 3),
+  showSkipVersion: true,
+  onOpenStore: () => openStore(),
+);
+
+// Or control Snooze & Skip programmatically in headless mode:
+CheckAppVersion.snooze(const Duration(days: 2));
+CheckAppVersion.skipVersion('1.6.0');
+CheckAppVersion.clearSnooze();
 ```
 
 ---
@@ -208,9 +276,9 @@ The configuration supports granular multi-platform control. You can configure on
 
 Choose between four pre-designed presentation styles according to your user experience needs:
 
-### 1. Classic Dialog
+### 1. Classic & Adaptive Cupertino Dialog
 
-A clean Material 3 popup card overlaying your app content. Ideal for standard update notifications.
+A clean Material 3 popup card (or native iOS/macOS `CupertinoAlertDialog` when `adaptive: true`) overlaying your app content.
 
 ```dart
 CheckAppVersion.showUpdateDialog(
@@ -223,6 +291,9 @@ CheckAppVersion.showUpdateDialog(
   updateLabel: 'Update Now',
   laterLabel: 'Later',
   popAfterPressed: true, // Automatically dismisses dialog on update tap
+  adaptive: true,        // Renders CupertinoAlertDialog on iOS/macOS
+  snoozeDuration: const Duration(days: 3),
+  showSkipVersion: true,
 );
 ```
 
@@ -325,6 +396,8 @@ if (decision.shouldUpdate) {
 - `UpdateReason.belowMinimum`: Installed version or build is below minimum required threshold.
 - `UpdateReason.belowLatest`: Installed version or build is below latest release (eligible for soft update).
 - `UpdateReason.cached`: Decision served from in-memory cache.
+- `UpdateReason.snoozed`: Soft update prompt was suppressed because the user snoozed it.
+- `UpdateReason.skippedVersion`: Soft update prompt was suppressed because the user skipped this version.
 - `UpdateReason.networkError`: Network request failed or HTTP status code != 200.
 - `UpdateReason.parseError`: Payload could not be parsed as valid JSON.
 - `UpdateReason.platformUnsupported`: Current platform is missing from the `platforms` node in JSON.
@@ -344,6 +417,8 @@ final decision = await CheckAppVersion.get(
     httpTimeout: Duration(seconds: 4),      // Custom HTTP timeout
     debugMode: true,                        // Output diagnostics via dart:developer
     platform: SupportedPlatform.android,    // Override platform (useful for testing)
+    snoozeDuration: Duration(days: 3),      // Optional default snooze duration
+    respectSnooze: true,                    // Respect snoozed/skipped soft updates
   ),
 );
 ```
@@ -423,10 +498,14 @@ if (decision.shouldUpdate && context.mounted) {
 
 | Method | Return Type | Description |
 |---|---|---|
-| `get(source, {policy})` | `Future<UpdateDecision>` | Evaluates app version against a remote URL, local asset, or raw JSON string. |
-| `showUpdateDialog(context, ...)` | `Future<void>` | Shows a themed Material 3 Alert Dialog. |
+| `get(source, {policy})` | `Future<UpdateDecision>` | Evaluates app version against a remote URL, local asset, raw JSON string, or `'store'`. |
+| `fromStores({...})` | `Future<UpdateDecision>` | Queries Apple App Store (iOS/macOS) or Google Play Store (Android) directly. |
+| `showUpdateDialog(context, ...)` | `Future<void>` | Shows a Material 3 AlertDialog or adaptive `CupertinoAlertDialog`. |
 | `showUpdateModal(context, ...)` | `Future<void>` | Shows a themed Modal Bottom Sheet. |
 | `showUpdatePage(context, ...)` | `Future<T?>` | Navigates to a full-screen blocking update page. |
+| `snooze(duration)` | `void` | Snoozes soft update notifications for the specified `Duration`. |
+| `skipVersion(version)` | `void` | Marks a specific version string as skipped for soft updates. |
+| `clearSnooze()` | `void` | Resets active snooze timers and skipped versions. |
 | `clearCache()` | `void` | Flushes all entries from in-memory cache. |
 | `invalidateCache(key)` | `void` | Removes a specific entry from cache. |
 

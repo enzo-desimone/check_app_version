@@ -10,6 +10,8 @@ class UpdatePolicy {
     this.forceRefresh = false,
     this.httpTimeout = const Duration(seconds: 5),
     this.debugMode = false,
+    this.snoozeDuration,
+    this.respectSnooze = true,
   });
 
   /// Override the auto-detected platform.
@@ -33,6 +35,17 @@ class UpdatePolicy {
   /// traces via `dart:developer`. Defaults to `false`.
   final bool debugMode;
 
+  /// Optional duration to snooze soft updates when the user
+  /// dismisses or taps "Later".
+  final Duration? snoozeDuration;
+
+  /// Whether soft updates should be suppressed while a snooze
+  /// window is active or when the target version was skipped.
+  ///
+  /// Mandatory updates (`isForceUpdate == true`) always ignore
+  /// snooze and skip states. Defaults to `true`.
+  final bool respectSnooze;
+
   /// Returns a copy with the given fields replaced.
   UpdatePolicy copyWith({
     SupportedPlatform? platform,
@@ -40,6 +53,8 @@ class UpdatePolicy {
     bool? forceRefresh,
     Duration? httpTimeout,
     bool? debugMode,
+    Duration? snoozeDuration,
+    bool? respectSnooze,
   }) {
     return UpdatePolicy(
       platform: platform ?? this.platform,
@@ -47,6 +62,8 @@ class UpdatePolicy {
       forceRefresh: forceRefresh ?? this.forceRefresh,
       httpTimeout: httpTimeout ?? this.httpTimeout,
       debugMode: debugMode ?? this.debugMode,
+      snoozeDuration: snoozeDuration ?? this.snoozeDuration,
+      respectSnooze: respectSnooze ?? this.respectSnooze,
     );
   }
 
@@ -59,22 +76,29 @@ class UpdatePolicy {
           cacheTtl == other.cacheTtl &&
           forceRefresh == other.forceRefresh &&
           httpTimeout == other.httpTimeout &&
-          debugMode == other.debugMode;
+          debugMode == other.debugMode &&
+          snoozeDuration == other.snoozeDuration &&
+          respectSnooze == other.respectSnooze;
 
   @override
   int get hashCode => Object.hash(
-        platform,
-        cacheTtl,
-        forceRefresh,
-        httpTimeout,
-        debugMode,
-      );
+    platform,
+    cacheTtl,
+    forceRefresh,
+    httpTimeout,
+    debugMode,
+    snoozeDuration,
+    respectSnooze,
+  );
 
   @override
-  String toString() => 'UpdatePolicy('
+  String toString() =>
+      'UpdatePolicy('
       'platform: $platform, '
       'cacheTtl: $cacheTtl, '
       'forceRefresh: $forceRefresh, '
       'httpTimeout: $httpTimeout, '
-      'debugMode: $debugMode)';
+      'debugMode: $debugMode, '
+      'snoozeDuration: $snoozeDuration, '
+      'respectSnooze: $respectSnooze)';
 }

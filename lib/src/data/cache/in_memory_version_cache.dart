@@ -34,10 +34,7 @@ class InMemoryVersionCache {
     UpdateDecision decision, {
     Duration ttl = const Duration(minutes: 10),
   }) {
-    _store[key] = _CacheEntry(
-      decision,
-      DateTime.now().add(ttl),
-    );
+    _store[key] = _CacheEntry(decision, DateTime.now().add(ttl));
   }
 
   /// Removes a single entry.
@@ -58,6 +55,5 @@ class InMemoryVersionCache {
     required String sourceType,
     required String path,
     required String platform,
-  }) =>
-      '$sourceType:$path:$platform';
+  }) => '$sourceType:$path:$platform';
 }

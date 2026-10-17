@@ -96,8 +96,8 @@ class VersionCheckController extends ValueNotifier<UpdateState> {
   /// actual version check and returns an [UpdateDecision].
   VersionCheckController({
     required Future<UpdateDecision> Function() checkCallback,
-  })  : _checkCallback = checkCallback,
-        super(const UpdateStateIdle());
+  }) : _checkCallback = checkCallback,
+       super(const UpdateStateIdle());
 
   final Future<UpdateDecision> Function() _checkCallback;
 

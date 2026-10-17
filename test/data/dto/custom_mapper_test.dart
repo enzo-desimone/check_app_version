@@ -42,18 +42,12 @@ void main() {
         throw const FormatException('bad data');
       }
 
-      expect(
-        () => throwingMapper(const {}),
-        throwsA(isA<FormatException>()),
-      );
+      expect(() => throwingMapper(const {}), throwsA(isA<FormatException>()));
     });
 
     test('custom mapper with completely different schema', () {
       const oddJson = {
-        'data': {
-          'minimum': '3.0.0',
-          'minimum_code': 100,
-        },
+        'data': {'minimum': '3.0.0', 'minimum_code': 100},
       };
 
       VersionInfo oddMapper(Map<String, dynamic> json) {

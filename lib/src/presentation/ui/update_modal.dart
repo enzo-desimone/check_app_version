@@ -1,3 +1,4 @@
+import 'package:check_app_version/src/data/cache/snooze_manager.dart';
 import 'package:check_app_version/src/domain/entities/update_decision.dart';
 import 'package:flutter/material.dart';
 
@@ -14,16 +15,26 @@ Future<void> showUpdateModal(
   String updateLabel = 'Update Now',
   String laterLabel = 'Later',
   bool popAfterPressed = true,
+  Duration? snoozeDuration,
+  bool showSkipVersion = false,
+  String skipLabel = 'Skip this version',
+  VoidCallback? onSkipVersion,
 }) {
   final theme = Theme.of(context);
-  final body = message ??
+  final body =
+      message ??
       (decision.isForceUpdate
           ? 'Version ${decision.requiredMinVersion} or later '
-              'is required. Please update to continue '
-              'using this app.'
+                'is required. Please update to continue '
+                'using this app.'
           : 'A new version'
-              '${decision.latestVersion != null ? " (v${decision.latestVersion})" : ""} '
-              'is available. Would you like to update?');
+                '${decision.latestVersion != null ? " (v${decision.latestVersion})" : ""} '
+                'is available. Would you like to update?');
+
+  final canSkip =
+      showSkipVersion &&
+      !decision.isForceUpdate &&
+      (decision.latestVersion?.trim().isNotEmpty ?? false);
 
   return showModalBottomSheet<void>(
     context: context,
@@ -31,21 +42,14 @@ Future<void> showUpdateModal(
     enableDrag: !decision.isForceUpdate,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(24),
-      ),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
     builder: (ctx) {
       return PopScope(
         canPop: !decision.isForceUpdate,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              24,
-              24,
-              24,
-              32,
-            ),
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -94,8 +98,36 @@ Future<void> showUpdateModal(
                   SizedBox(
                     width: double.infinity,
                     child: TextButton(
-                      onPressed: onLater ?? () => Navigator.of(ctx).pop(),
+                      onPressed: () {
+                        if (snoozeDuration != null) {
+                          SnoozeManager.instance.snooze(snoozeDuration);
+                        }
+                        if (onLater != null) {
+                          onLater();
+                        } else {
+                          Navigator.of(ctx).pop();
+                        }
+                      },
                       child: Text(laterLabel),
+                    ),
+                  ),
+                ],
+                if (canSkip) ...[
+                  const SizedBox(height: 4),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () {
+                        final latest = decision.latestVersion?.trim();
+                        if (latest != null && latest.isNotEmpty) {
+                          SnoozeManager.instance.skipVersion(latest);
+                        }
+                        if (popAfterPressed) {
+                          Navigator.of(ctx).pop();
+                        }
+                        onSkipVersion?.call();
+                      },
+                      child: Text(skipLabel),
                     ),
                   ),
                 ],

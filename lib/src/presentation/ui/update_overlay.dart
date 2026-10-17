@@ -1,3 +1,4 @@
+import 'package:check_app_version/src/data/cache/snooze_manager.dart';
 import 'package:check_app_version/src/domain/entities/update_decision.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class UpdateOverlay extends StatefulWidget {
     this.onDismiss,
     this.message,
     this.updateLabel = 'Update',
+    this.snoozeDuration,
     super.key,
   });
 
@@ -31,6 +33,9 @@ class UpdateOverlay extends StatefulWidget {
 
   /// Label for the update action.
   final String updateLabel;
+
+  /// Optional duration to snooze soft updates when dismissed.
+  final Duration? snoozeDuration;
 
   @override
   State<UpdateOverlay> createState() => _UpdateOverlayState();
@@ -51,12 +56,7 @@ class _UpdateOverlayState extends State<UpdateOverlay>
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, -1),
       end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeOut,
-      ),
-    );
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
     _controller.forward();
   }
 
@@ -67,6 +67,9 @@ class _UpdateOverlayState extends State<UpdateOverlay>
   }
 
   void _dismiss() {
+    if (widget.snoozeDuration != null) {
+      SnoozeManager.instance.snooze(widget.snoozeDuration!);
+    }
     _controller.reverse().then((_) {
       widget.onDismiss?.call();
     });
@@ -75,7 +78,8 @@ class _UpdateOverlayState extends State<UpdateOverlay>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final text = widget.message ??
+    final text =
+        widget.message ??
         'A new version is available'
             '${widget.decision.latestVersion != null ? " (v${widget.decision.latestVersion})" : ""}.';
 
@@ -87,10 +91,7 @@ class _UpdateOverlayState extends State<UpdateOverlay>
         child: SafeArea(
           bottom: false,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
               children: [
                 Icon(

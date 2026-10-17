@@ -35,14 +35,8 @@ void main() {
       expect(info.appId, 'com.example.myapp');
       expect(info.configVersion, 1);
       expect(info.platforms.length, 2);
-      expect(
-        info.platforms.containsKey(SupportedPlatform.android),
-        isTrue,
-      );
-      expect(
-        info.platforms.containsKey(SupportedPlatform.ios),
-        isTrue,
-      );
+      expect(info.platforms.containsKey(SupportedPlatform.android), isTrue);
+      expect(info.platforms.containsKey(SupportedPlatform.ios), isTrue);
     });
 
     test('android platform has correct fields', () {
@@ -86,9 +80,7 @@ void main() {
     });
 
     test('empty platforms map is valid', () {
-      final info = VersionInfo.fromJson(
-        const {'app_id': 'test'},
-      );
+      final info = VersionInfo.fromJson(const {'app_id': 'test'});
       expect(info.platforms, isEmpty);
     });
 
@@ -109,10 +101,7 @@ void main() {
       };
       final info = VersionInfo.fromJson(json);
       expect(info.platforms.length, 1);
-      expect(
-        info.platforms.containsKey(SupportedPlatform.android),
-        isTrue,
-      );
+      expect(info.platforms.containsKey(SupportedPlatform.android), isTrue);
     });
   });
 
@@ -124,10 +113,7 @@ void main() {
 
       expect(restored.appId, original.appId);
       expect(restored.configVersion, original.configVersion);
-      expect(
-        restored.platforms.length,
-        original.platforms.length,
-      );
+      expect(restored.platforms.length, original.platforms.length);
       expect(
         restored.platforms[SupportedPlatform.android],
         original.platforms[SupportedPlatform.android],
@@ -187,18 +173,9 @@ void main() {
 
   group('SupportedPlatform', () {
     test('tryParse returns correct enum', () {
-      expect(
-        SupportedPlatform.tryParse('android'),
-        SupportedPlatform.android,
-      );
-      expect(
-        SupportedPlatform.tryParse('iOS'),
-        SupportedPlatform.ios,
-      );
-      expect(
-        SupportedPlatform.tryParse('WINDOWS'),
-        SupportedPlatform.windows,
-      );
+      expect(SupportedPlatform.tryParse('android'), SupportedPlatform.android);
+      expect(SupportedPlatform.tryParse('iOS'), SupportedPlatform.ios);
+      expect(SupportedPlatform.tryParse('WINDOWS'), SupportedPlatform.windows);
     });
 
     test('tryParse returns null for unknown', () {

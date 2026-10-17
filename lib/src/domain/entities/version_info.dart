@@ -49,12 +49,12 @@ class VersionInfo {
 
   /// Serializes to a JSON-compatible map.
   Map<String, dynamic> toJson() => {
-        if (appId != null) 'app_id': appId,
-        if (configVersion != null) 'config_version': configVersion,
-        'platforms': platforms.map(
-          (key, value) => MapEntry(key.name, value.toJson()),
-        ),
-      };
+    if (appId != null) 'app_id': appId,
+    if (configVersion != null) 'config_version': configVersion,
+    'platforms': platforms.map(
+      (key, value) => MapEntry(key.name, value.toJson()),
+    ),
+  };
 
   /// Returns a copy with the given fields replaced.
   VersionInfo copyWith({
@@ -79,14 +79,12 @@ class VersionInfo {
           _mapsEqual(platforms, other.platforms);
 
   @override
-  int get hashCode => Object.hash(
-        appId,
-        configVersion,
-        Object.hashAll(platforms.entries),
-      );
+  int get hashCode =>
+      Object.hash(appId, configVersion, Object.hashAll(platforms.entries));
 
   @override
-  String toString() => 'VersionInfo('
+  String toString() =>
+      'VersionInfo('
       'appId: $appId, '
       'configVersion: $configVersion, '
       'platforms: $platforms)';

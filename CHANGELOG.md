@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.1.0
+
+- **Zero-Backend Store Lookup**: Added `CheckAppVersion.fromStores()` and `'store'` source support to query Apple App Store (iOS/macOS) and Google Play Store (Android) directly.
+- **Declarative `UpdateGate` Widget**: Added `UpdateGate` wrapper with `checkOnResume` lifecycle support and configurable presentation styles (`dialog`, `modal`, `page`, `overlay`).
+- **Smart Snooze & Skip Version**: Added `snooze()`, `skipVersion()`, `snoozeDuration`, and `showSkipVersion` to suppress non-mandatory update prompts temporarily or per release.
+- **Adaptive Native Dialogs**: Added `adaptive: true` to `showUpdateDialog` to automatically render `CupertinoAlertDialog` on iOS/macOS and Material 3 on other platforms.
+- **Full Web & WASM Compatibility**: Isolated native `package_info_plus` imports behind conditional `dart.library.js_interop` imports to eliminate `dart:io` transitive imports on Web/WASM runtimes.
+- **Dependencies**: Upgraded `package_info_plus` to `^10.2.2`.
+
 ## 3.0.2
 
 - **Documentation & Showcase**: Added package screenshot metadata in `pubspec.yaml` for pub.dev preview.

@@ -1,14 +1,22 @@
 name: check_app_version
-description: >
-  A Flutter package that checks whether the installed app
-  version is up-to-date, supporting file and HTTP endpoint
-  JSON sources with in-memory caching and optional UI
-  utilities.
-version: 3.0.2
+description: >-
+  Flutter in-app update and version checker via App Store, Google Play,
+  or custom JSON. Supports force updates, smart snooze, UpdateGate
+  widget, and Material/Cupertino UI.
+version: 3.1.0
 homepage: https://github.com/enzo-desimone/check_app_version
+repository: https://github.com/enzo-desimone/check_app_version
+issue_tracker: https://github.com/enzo-desimone/check_app_version/issues
+
+topics:
+  - update
+  - version
+  - in-app-update
+  - upgrader
+  - app-update
 
 screenshots:
-  - description: "Cross-platform Flutter in-app update checker displaying customizable force update dialog, version comparison, and remote JSON validation."
+  - description: "Cross-platform Flutter in-app update checker with App Store & Google Play lookup, force update dialog, Cupertino & Material 3 UI, and remote JSON validation."
     path: example/check-app-version.webp
 
 environment:
@@ -19,7 +27,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.6.0
-  package_info_plus: ^10.2.1
+  package_info_plus: ^10.2.2
 
 dev_dependencies:
   flutter_lints: ^6.0.0

@@ -21,6 +21,12 @@ enum UpdateReason {
 
   /// The result was served from cache.
   cached,
+
+  /// Soft update prompt was suppressed because the user snoozed it.
+  snoozed,
+
+  /// Soft update prompt was suppressed because the user skipped this version.
+  skippedVersion,
 }
 
 /// The result of a version check operation.
@@ -62,11 +68,7 @@ class UpdateDecision {
 
   /// Convenience constructor for error / edge-case results.
   const UpdateDecision.error(UpdateReason errorReason)
-      : this(
-          shouldUpdate: false,
-          isForceUpdate: false,
-          reason: errorReason,
-        );
+    : this(shouldUpdate: false, isForceUpdate: false, reason: errorReason);
 
   /// Whether an update is available.
   final bool shouldUpdate;
@@ -103,18 +105,18 @@ class UpdateDecision {
 
   /// Serializes to a JSON-compatible map.
   Map<String, dynamic> toJson() => {
-        'should_update': shouldUpdate,
-        'is_force_update': isForceUpdate,
-        'reason': reason.name,
-        'installed_version': installedVersion,
-        'installed_build': installedBuild,
-        'required_min_version': requiredMinVersion,
-        'required_min_build': requiredMinBuild,
-        if (latestVersion != null) 'latest_version': latestVersion,
-        if (latestBuild != null) 'latest_build': latestBuild,
-        if (appStoreId != null) 'app_store_id': appStoreId,
-        if (productId != null) 'product_id': productId,
-      };
+    'should_update': shouldUpdate,
+    'is_force_update': isForceUpdate,
+    'reason': reason.name,
+    'installed_version': installedVersion,
+    'installed_build': installedBuild,
+    'required_min_version': requiredMinVersion,
+    'required_min_build': requiredMinBuild,
+    if (latestVersion != null) 'latest_version': latestVersion,
+    if (latestBuild != null) 'latest_build': latestBuild,
+    if (appStoreId != null) 'app_store_id': appStoreId,
+    if (productId != null) 'product_id': productId,
+  };
 
   /// Returns a copy with the given fields replaced.
   UpdateDecision copyWith({
@@ -164,21 +166,22 @@ class UpdateDecision {
 
   @override
   int get hashCode => Object.hash(
-        shouldUpdate,
-        isForceUpdate,
-        reason,
-        installedVersion,
-        installedBuild,
-        requiredMinVersion,
-        requiredMinBuild,
-        latestVersion,
-        latestBuild,
-        appStoreId,
-        productId,
-      );
+    shouldUpdate,
+    isForceUpdate,
+    reason,
+    installedVersion,
+    installedBuild,
+    requiredMinVersion,
+    requiredMinBuild,
+    latestVersion,
+    latestBuild,
+    appStoreId,
+    productId,
+  );
 
   @override
-  String toString() => 'UpdateDecision('
+  String toString() =>
+      'UpdateDecision('
       'shouldUpdate: $shouldUpdate, '
       'isForceUpdate: $isForceUpdate, '
       'reason: $reason, '

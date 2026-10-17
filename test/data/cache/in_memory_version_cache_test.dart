@@ -28,11 +28,7 @@ void main() {
 
     test('get after TTL returns null', () {
       // Use a 0-duration TTL so entry expires immediately.
-      cache.put(
-        'key1',
-        decision,
-        ttl: Duration.zero,
-      );
+      cache.put('key1', decision, ttl: Duration.zero);
       // Give time for the TTL to expire.
       final result = cache.get('key1');
       expect(result, isNull);
